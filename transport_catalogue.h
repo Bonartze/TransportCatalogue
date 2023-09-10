@@ -62,7 +62,6 @@ namespace RouteImitation {
         std::unordered_map<std::string, Stop> &GetStops();
 
         void AddBusRouteStop(size_t, std::string &);
-
     private:
         std::unordered_map<std::string, Stop> stops;  // O(1) all operation average
         std::unordered_map<size_t, Bus *> routes;
