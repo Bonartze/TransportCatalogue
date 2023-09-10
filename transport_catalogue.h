@@ -1,5 +1,6 @@
 #include <string>
 #include <deque>
+#include <string_view>
 #include <unordered_map>
 #include <unordered_set>
 #include "geo.h"
@@ -9,10 +10,10 @@
 
 namespace RouteImitation {
     struct Stop {
-        Coordinates coordinates;
+        Geographic::Coordinates coordinates;
         std::string name;
 
-        explicit Stop(Coordinates &coord, std::string &nm) :
+        explicit Stop(Geographic::Coordinates &coord, std::string &nm) :
                 coordinates(coord), name(nm) {}
 
         Stop() : coordinates{0.0, 0.0} {} // Initialize coordinates with default values
@@ -37,7 +38,7 @@ namespace RouteImitation {
 
         Bus() : stops_number(0), unique_stops({}),
                 route_length_direct(0.0), routes_({}),
-                type('u'), route_length_computed(0.0) {}
+                type('u'), route_length_computed(0.0), curvature(0.0) {}
     };
 
     struct PairHash {
@@ -46,15 +47,11 @@ namespace RouteImitation {
 
 
     class TransportCatalogue {
-    private:
-        std::unordered_map<std::string, Stop> stops;  // O(1) all operation average
-        std::unordered_map<size_t, Bus *> routes;
-        std::unordered_map<Stop *, std::unordered_set<size_t>> buses_in_stops;   // buses with all their stops
-        std::unordered_map<std::pair<Stop *, Stop *>, size_t, PairHash> stop_distances;    // distances between stops
     public:
-        void AddStop(std::string &, Coordinates);   // add stop as member of class's field in unordered_map
+        void AddStop(std::string &, Geographic::Coordinates);   // add stop as member of class's field in unordered_map
 
         void AddStopDistances(std::string &, std::string &, size_t);
+
 
         std::unordered_set<size_t> &GetBusesInStop(std::string &);
 
@@ -65,5 +62,11 @@ namespace RouteImitation {
         std::unordered_map<std::string, Stop> &GetStops();
 
         void AddBusRouteStop(size_t, std::string &);
+
+    private:
+        std::unordered_map<std::string, Stop> stops;  // O(1) all operation average
+        std::unordered_map<size_t, Bus *> routes;
+        std::unordered_map<Stop *, std::unordered_set<size_t>> buses_in_stops;   // buses with all their stops
+        std::unordered_map<std::pair<Stop *, Stop *>, size_t, PairHash> stop_distances;    // distances between stops
     };
 }

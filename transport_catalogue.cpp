@@ -32,23 +32,29 @@ namespace RouteImitation {
             else
                 routes[number]->route_length_direct +=
                         2 * ComputeDistance(last_stop->coordinates, stops[stop_name].coordinates);
-            if (last_stop->name != stop_name) {
+            if (routes[number]->type == 'c')
+                routes[number]->route_length_computed +=
+                        stop_distances.find({last_stop, &stops[stop_name]}) == end(stop_distances) ?
+                        stop_distances[{&stops[stop_name], last_stop}] : stop_distances[{last_stop, &stops[stop_name]}];
+            else {
                 if (stop_distances.find({last_stop, &stops[stop_name]}) == end(stop_distances)) {
-                    if (routes[number]->type == 'c')
-                        routes[number]->route_length_computed += stop_distances[{&stops[stop_name], last_stop}];
-                    else
-                        routes[number]->route_length_computed += 2 * stop_distances[{&stops[stop_name], last_stop}];
+                    routes[number]->route_length_computed += 2 * stop_distances[{&stops[stop_name], last_stop}];
                 } else {
-                    if (routes[number]->type == 'c')
-                        routes[number]->route_length_computed += stop_distances[{last_stop, &stops[stop_name]}];
-                    else
+                    if (stop_distances.find({&stops[stop_name], last_stop}) != end(stop_distances)) {
+                        routes[number]->route_length_computed += stop_distances[{&stops[stop_name], last_stop}] +
+                                                                 stop_distances[{last_stop, &stops[stop_name]}];
+                    } else
                         routes[number]->route_length_computed += 2 * stop_distances[{last_stop, &stops[stop_name]}];
                 }
             }
+
         }
-        routes[number]->routes_.push_back(&stops[stop_name]);
+
+        routes[number]->routes_.
+                push_back(&stops[stop_name]);
         if (routes[number]->route_length_direct != 0)
-            routes[number]->curvature =
+            routes[number]->
+                    curvature =
                     (double) routes[number]->route_length_computed / routes[number]->route_length_direct;
     }
 
@@ -62,7 +68,7 @@ namespace RouteImitation {
         stop_distances[{&stops[name_from], &stops[name_to]}] = distance;
     }
 
-    void TransportCatalogue::AddStop(std::string &name, Coordinates coordinates) {
+    void TransportCatalogue::AddStop(std::string &name, Geographic::Coordinates coordinates) {
         stops[name] = Stop(coordinates, name);
     }
 
