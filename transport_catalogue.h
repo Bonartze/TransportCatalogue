@@ -56,6 +56,7 @@ namespace RouteImitation {
 
         void AddStopDistances(std::string &, std::string &, size_t);
 
+
         std::unordered_set<size_t> &GetBusesInStop(std::string &);
 
         void AddTag(size_t, char c);

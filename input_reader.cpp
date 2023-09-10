@@ -22,6 +22,7 @@ namespace InputData {
         string name_from, name_to;
         double x, y;
         getline(line, name_from, ':');
+        string name;
         line.ignore(1);
         line >> x;
         line.ignore(1);
@@ -38,6 +39,7 @@ namespace InputData {
             transportCatalogue.AddStopDistances(name_from, name_to, distance_to);
             line.ignore(1);
         }
+        transportCatalogue.AddStop(name, {x, y});
     }
 
     void Parse::Parser::BusNumberAndRoute(std::stringstream &line) {
