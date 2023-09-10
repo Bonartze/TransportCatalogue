@@ -5,6 +5,7 @@
 0	19	1694340855605220113	build.ninja	3b6a8225b00050a
 1	776	1694350706421580036	CMakeFiles/TransportManual.dir/transport_catalogue.cpp.o	36307a3d81eb17a5
 1	968	1694353189171488868	CMakeFiles/TransportManual.dir/stat_reader.cpp.o	911eeb5a4ca48618
+<<<<<<< HEAD
 0	1041	1694360696493927754	CMakeFiles/TransportManual.dir/main.cpp.o	d342d2511f9e0f0a
 1	1062	1694360696513928067	CMakeFiles/TransportManual.dir/stat_reader.cpp.o	911eeb5a4ca48618
 1	909	1694360709342124799	CMakeFiles/TransportManual.dir/input_reader.cpp.o	e97231168b5f7956
@@ -31,3 +32,15 @@
 870	975	1694363345978760610	TransportManual	68b085dbf78daf74
 1	844	1694364227877941819	CMakeFiles/TransportManual.dir/transport_catalogue.cpp.o	36307a3d81eb17a5
 844	948	1694364227981941181	TransportManual	68b085dbf78daf74
+=======
+2	966	1694360467301021564	CMakeFiles/TransportManual.dir/input_reader.cpp.o	e97231168b5f7956
+2	1108	1694360467441025501	CMakeFiles/TransportManual.dir/main.cpp.o	d342d2511f9e0f0a
+3	1116	1694360467449025726	CMakeFiles/TransportManual.dir/stat_reader.cpp.o	911eeb5a4ca48618
+3	1432	1694360467765034612	CMakeFiles/TransportManual.dir/transport_catalogue.cpp.o	36307a3d81eb17a5
+1432	1576	1694360467909038661	TransportManual	68b085dbf78daf74
+1	951	1694360501509945155	CMakeFiles/TransportManual.dir/input_reader.cpp.o	e97231168b5f7956
+1	1056	1694360501609947744	CMakeFiles/TransportManual.dir/main.cpp.o	d342d2511f9e0f0a
+2	1085	1694360501641948573	CMakeFiles/TransportManual.dir/stat_reader.cpp.o	911eeb5a4ca48618
+2	1477	1694360502029958617	CMakeFiles/TransportManual.dir/transport_catalogue.cpp.o	36307a3d81eb17a5
+1477	1621	1694360502177962440	TransportManual	68b085dbf78daf74
+>>>>>>> origin/main
