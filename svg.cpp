@@ -134,7 +134,7 @@ namespace svg {
         DocumentFabric.emplace_back(std::make_unique<Text>(std::move(text)));
     }
 
-    void Document::AddPtr(std::unique_ptr <Object> &&obj) {
+    void Document::AddPtr(std::unique_ptr<Object> &&obj) {
         DocumentFabric.emplace_back(std::move(obj));
     }
 

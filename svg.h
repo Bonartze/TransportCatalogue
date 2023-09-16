@@ -122,26 +122,34 @@ namespace svg {
         void RenderObject(const RenderContext &context) const override;
     };
 
-    class Document {
+    class ObjectContainer {
     public:
-        /*
-         Метод Add добавляет в svg-документ любой объект-наследник svg::Object.
-         Пример использования:
-         Document doc;
-         doc.Add(Circle().SetCenter({20, 30}).SetRadius(15));
-        */
+
+        virtual void Add(Circle) = 0;
+
+        virtual void Add(Polyline) = 0;
+
+        virtual void Add(Text) = 0;
+
+        virtual void AddPtr(std::unique_ptr<Object> &&) = 0;
+
+    };
+
+
+    class Document : public ObjectContainer {
+    public:
         Document() = default;
 
-        template<class Obj>
+        /*template<class Obj>
         void Add(Obj obj);
+*/
+        void Add(Circle) override;
 
-        void Add(Circle);
+        void Add(Polyline) override;
 
-        void Add(Polyline);
+        void Add(Text) override;
 
-        void Add(Text);
-
-        void AddPtr(std::unique_ptr<Object> &&obj);
+        void AddPtr(std::unique_ptr<Object> &&obj) override;
 
         void Render(std::ostream &out) const;
 
@@ -150,4 +158,9 @@ namespace svg {
         std::vector<std::unique_ptr<Object>> DocumentFabric;
     };
 
+
+    class Drawable {
+    public:
+        virtual void Draw(ObjectContainer &) const= 0;
+    };
 }
