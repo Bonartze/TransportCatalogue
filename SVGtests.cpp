@@ -3,7 +3,6 @@
 #include "svg.h"
 #include <cmath>
 
-
 namespace {
     svg::Polyline CreateStar(svg::Point center, double outer_rad, double inner_rad, int num_rays) {
         using namespace svg;
@@ -44,7 +43,9 @@ namespace shapes {
                                                               beam_length(b_l), inside_radios(i_r), beam_number(b_n) {};
 
         void Draw(svg::ObjectContainer &container) const override {
-            container.Add(CreateStar(centre_, beam_length, inside_radios, beam_number).SetFillColor("red").SetStrokeColor("black"));
+            container.Add(
+                    CreateStar(centre_, beam_length, inside_radios, beam_number).SetFillColor("red").SetStrokeColor(
+                            "black"));
         }
 
     private:
@@ -74,8 +75,7 @@ namespace shapes {
         int radios;
     };
 
-} // namespace shapes
-
+}
 
 
 template<typename DrawableIterator>
@@ -93,30 +93,26 @@ void DrawPicture(const Container &container, svg::ObjectContainer &target) {
 
 int main() {
     using namespace svg;
-    using namespace shapes;
     using namespace std;
 
-    vector<unique_ptr<svg::Drawable>> picture;
-    picture.emplace_back(make_unique<Triangle>(Point{100, 20}, Point{120, 50}, Point{80, 40}));
-    picture.emplace_back(make_unique<Star>(Point{50.0, 20.0}, 10.0, 4.0, 5));
-    picture.emplace_back(make_unique<Snowman>(Point{30, 20}, 10.0));
+    Color none_color;
+    cout << none_color << endl; // none
 
-    svg::Document doc;
-    DrawPicture(picture, doc);
+    Color purple{"purple"s};
+    cout << purple << endl; // purple
 
-    const Text base_text =
-            Text()
-                    .SetFontFamily("Verdana"s)
-                    .SetFontSize(12)
-                    .SetPosition({10, 100})
-                    .SetData("Happy New Year!"s);
-    doc.Add(Text{base_text}
-                    .SetStrokeColor("yellow"s)
-                    .SetFillColor("yellow"s)
-                    .SetStrokeLineJoin(StrokeLineJoin::ROUND)
-                    .SetStrokeLineCap(StrokeLineCap::ROUND)
-                    .SetStrokeWidth(3));
-    doc.Add(Text{base_text}.SetFillColor("red"s));
+    Color rgb = Rgb{100, 200, 255};
+    cout << rgb << endl; // rgb(100,200,255)
 
+    Color rgba = Rgba{100, 200, 255, 0.5};
+    cout << rgba << endl; // rgba(100,200,255,0.5)
+
+    Circle c;
+    c.SetRadius(3.5).SetCenter({1.0, 2.0});
+    c.SetFillColor(rgba);
+    c.SetStrokeColor(purple);
+
+    Document doc;
+    doc.Add(std::move(c));
     doc.Render(cout);
 }

@@ -4,7 +4,9 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <iomanip>
 #include <optional>
+#include <variant>
 #include <vector>
 
 namespace svg {
@@ -21,10 +23,50 @@ namespace svg {
         MITER_CLIP,
         ROUND,
     };
+    struct Rgb {
+        uint8_t red;
+        uint8_t green;
+        uint8_t blue;
+    };
 
-    using Color = std::string;
+    struct Rgba {
+        uint8_t red;
+        uint8_t green;
+        uint8_t blue;
+        double opacity;
+    };
 
-    inline const Color NoneColor{"none"};
+
+    using Color = std::variant<std::monostate, std::string, Rgb, Rgba>;
+
+
+    struct PrintColor {
+        std::ostream &out;
+
+        void operator()(std::monostate) const {
+            out << "none";
+        }
+
+        void operator()(std::string &color) const {
+            out << color;
+        }
+
+        void operator()(Rgb r) const {
+            out << "rgb(" << std::to_string(r.red) << "," << std::to_string(r.green) << "," << std::to_string(r.blue)
+                << ")";
+        }
+
+        void operator()(Rgba r) {
+            out << "rgba(" << std::to_string(r.red) << "," << std::to_string(r.green) << "," << std::to_string(r.blue)
+                << "," << r.opacity << ")";
+        }
+    };
+
+    inline std::ostream &operator<<(std::ostream &out, Color color) {
+        std::visit(PrintColor{out}, color);
+        return out;
+    }
+
 
     struct Point {
         Point() = default;

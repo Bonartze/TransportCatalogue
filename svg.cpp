@@ -12,7 +12,6 @@ namespace svg {
         context.out << std::endl;
     }
 
-
     std::ostream &operator<<(std::ostream &os, const std::optional<StrokeLineCap> &stroke_line_cap) {
         std::string cap_string;
         switch (*stroke_line_cap) {
