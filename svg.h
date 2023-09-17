@@ -78,6 +78,12 @@ namespace svg {
     template<typename Owner>
     class PathProps {
     public:
+        PathProps(const PathProps &other) : stroke_color_(other.stroke_color_), fill_color_(other.fill_color_),
+                                            stroke_width_(other.stroke_width_), stroke_line_cap(other.stroke_line_cap),
+                                            stroke_line_join(other.stroke_line_join) {}
+
+        PathProps() = default;
+
         Owner &SetFillColor(Color color) {
             fill_color_ = color;
             return static_cast<Owner &>(*this);
@@ -109,9 +115,9 @@ namespace svg {
             if (fill_color_.has_value()) {
                 out << " fill=\"" << *fill_color_ << "\"";
             }
-            /*if (stroke_color_) {
+            if (stroke_color_) {
                 out << " stroke=\"" << *stroke_color_ << "\"";
-            }*/
+            }
             if (stroke_width_.has_value()) {
                 out << " stroke-width=\"" << *stroke_width_ << "\"";
             }
@@ -144,6 +150,8 @@ namespace svg {
     public:
         Circle() = default;
 
+        Circle(const Circle &) = default;
+
         ~Circle() override = default;
 
         Circle &SetCenter(Point center);
@@ -162,6 +170,8 @@ namespace svg {
     public:
         Polyline() = default;
 
+        Polyline(const Polyline &polyline) = default;
+
         ~Polyline() override = default;
 
 
@@ -179,7 +189,7 @@ namespace svg {
     public:
         Text() = default;
 
-        Text(const Text &);
+        Text(const Text &) = default;
 
         ~Text() override = default;
 

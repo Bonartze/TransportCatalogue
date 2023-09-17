@@ -90,16 +90,17 @@ namespace svg {
                 out << " ";
             }
         }
+        out << "\"";
         RenderAttrs(context.out);
-        out << "\" />";
+        out << "/>";
     }
 // ---------- Text ------------------
 
-    Text::Text(const Text &other) : TextCoordinates(other.TextCoordinates),
-                                    TextShifts(other.TextShifts), FontSize(other.FontSize),
-                                    FontWeight(other.FontWeight),
-                                    FontFamily(other.FontFamily),
-                                    text(other.text) {}
+    /*  Text::Text(const Text &other) : TextCoordinates(other.TextCoordinates),
+                                      TextShifts(other.TextShifts), FontSize(other.FontSize),
+                                      FontWeight(other.FontWeight),
+                                      FontFamily(other.FontFamily),
+                                      text(other.text), PathProps<Text>(other) {}*/
 
     std::string Text::replaceSpecialCharacters() const {
         std::string result;
@@ -170,7 +171,6 @@ namespace svg {
     void Document::AddPtr(std::unique_ptr<Object> &&obj) {
         DocumentFabric.emplace_back(std::move(obj));
     }
-
 
 
     void Document::Render(std::ostream &out) const {

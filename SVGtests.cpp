@@ -44,7 +44,7 @@ namespace shapes {
                                                               beam_length(b_l), inside_radios(i_r), beam_number(b_n) {};
 
         void Draw(svg::ObjectContainer &container) const override {
-            container.Add(CreateStar(centre_, beam_length, inside_radios, beam_number));
+            container.Add(CreateStar(centre_, beam_length, inside_radios, beam_number).SetFillColor("red").SetStrokeColor("black"));
         }
 
     private:
@@ -59,9 +59,14 @@ namespace shapes {
         Snowman(svg::Point c_, int r) : centre_(c_), radios(r) {}
 
         void Draw(svg::ObjectContainer &container) const override {
-            container.Add(svg::Circle().SetCenter({centre_.x, centre_.y + 5 * radios}).SetRadius(2 * radios));
-            container.Add(svg::Circle().SetCenter({centre_.x, centre_.y + 2 * radios}).SetRadius(1.5 * radios));
-            container.Add(svg::Circle().SetCenter(centre_).SetRadius(radios));
+            container.Add(
+                    svg::Circle().SetCenter({centre_.x, centre_.y + 5 * radios}).SetRadius(2 * radios).SetFillColor(
+                            "rgb(240,240,240)").SetStrokeColor("black"));
+            container.Add(
+                    svg::Circle().SetCenter({centre_.x, centre_.y + 2 * radios}).SetRadius(1.5 * radios).SetFillColor(
+                            "rgb(240,240,240)").SetStrokeColor("black"));
+            container.Add(svg::Circle().SetCenter(centre_).SetRadius(radios).SetFillColor(
+                    "rgb(240,240,240)").SetStrokeColor("black"));
         }
 
     private:
@@ -99,7 +104,7 @@ int main() {
     svg::Document doc;
     DrawPicture(picture, doc);
 
-    const Text base_text =  //
+    const Text base_text =
             Text()
                     .SetFontFamily("Verdana"s)
                     .SetFontSize(12)
