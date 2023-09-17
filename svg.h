@@ -4,9 +4,27 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <optional>
 #include <vector>
 
 namespace svg {
+    enum class StrokeLineCap {
+        BUTT,
+        ROUND,
+        SQUARE,
+    };
+
+    enum class StrokeLineJoin {
+        ARCS,
+        BEVEL,
+        MITER,
+        MITER_CLIP,
+        ROUND,
+    };
+
+    using Color = std::string;
+
+    inline const Color NoneColor{"none"};
 
     struct Point {
         Point() = default;
@@ -53,7 +71,76 @@ namespace svg {
         virtual void RenderObject(const RenderContext &context) const = 0;
     };
 
-    class Circle final : public Object {
+    std::ostream &operator<<(std::ostream &os, const std::optional<StrokeLineCap> &);
+
+    std::ostream &operator<<(std::ostream &os, const std::optional<StrokeLineJoin> &);
+
+    template<typename Owner>
+    class PathProps {
+    public:
+        Owner &SetFillColor(Color color) {
+            fill_color_ = color;
+            return static_cast<Owner &>(*this);
+        }
+
+        Owner &SetStrokeColor(Color color) {
+            this->stroke_color_ = std::move(color);
+            return static_cast<Owner &>(*this);
+        }
+
+        Owner &SetStrokeWidth(double width) {
+            stroke_width_ = width;
+            return static_cast<Owner &>(*this);
+        }
+
+        Owner &SetStrokeLineCap(StrokeLineCap strokeLineCap) {
+            stroke_line_cap = strokeLineCap;
+            return static_cast<Owner &>(*this);
+        }
+
+        Owner &SetStrokeLineJoin(StrokeLineJoin strokeLineJoin) {
+            stroke_line_join = strokeLineJoin;
+            return static_cast<Owner &>(*this);
+        }
+
+        void RenderAttrs(std::ostream &out) const {
+            using namespace std::literals;
+
+            if (fill_color_.has_value()) {
+                out << " fill=\"" << *fill_color_ << "\"";
+            }
+            /*if (stroke_color_) {
+                out << " stroke=\"" << *stroke_color_ << "\"";
+            }*/
+            if (stroke_width_.has_value()) {
+                out << " stroke-width=\"" << *stroke_width_ << "\"";
+            }
+            if (stroke_line_cap.has_value()) {
+                out << stroke_line_cap;
+            }
+            if (stroke_line_join.has_value()) {
+                out << stroke_line_join;
+            }
+        }
+
+
+    protected:
+        ~PathProps() = default;
+
+        std::optional<Color> stroke_color_;
+        std::optional<Color> fill_color_;
+        std::optional<double> stroke_width_;
+        std::optional<StrokeLineCap> stroke_line_cap;
+        std::optional<StrokeLineJoin> stroke_line_join;
+    private:
+        Owner &AsOwner() {
+            return static_cast<Owner &>(*this);
+        }
+
+
+    };
+
+    class Circle final : public Object, public PathProps<Circle> {
     public:
         Circle() = default;
 
@@ -71,14 +158,13 @@ namespace svg {
         double radius_ = 1.0;
     };
 
-    class Polyline final : public Object {
+    class Polyline final : public Object, public PathProps<Polyline> {
     public:
         Polyline() = default;
 
         ~Polyline() override = default;
 
 
-        // Добавляет очередную вершину к ломаной линии
         Polyline &AddPoint(Point point);
 
 
@@ -89,10 +175,11 @@ namespace svg {
     };
 
 
-    class Text final : public Object {
+    class Text final : public Object, public PathProps<Text> {
     public:
         Text() = default;
 
+        Text(const Text &);
 
         ~Text() override = default;
 
@@ -125,13 +212,16 @@ namespace svg {
     class ObjectContainer {
     public:
 
-        virtual void Add(Circle) = 0;
-
-        virtual void Add(Polyline) = 0;
-
-        virtual void Add(Text) = 0;
-
         virtual void AddPtr(std::unique_ptr<Object> &&) = 0;
+
+        template<typename Obj>
+        void Add(Obj obj) {
+            DocumentFabric.emplace_back(std::make_unique<Obj>(std::move(obj)));
+        }
+
+
+    protected:
+        std::vector<std::unique_ptr<Object>> DocumentFabric;
 
     };
 
@@ -140,27 +230,17 @@ namespace svg {
     public:
         Document() = default;
 
-        /*template<class Obj>
-        void Add(Obj obj);
-*/
-        void Add(Circle) override;
-
-        void Add(Polyline) override;
-
-        void Add(Text) override;
 
         void AddPtr(std::unique_ptr<Object> &&obj) override;
 
         void Render(std::ostream &out) const;
 
 
-    private:
-        std::vector<std::unique_ptr<Object>> DocumentFabric;
     };
 
 
     class Drawable {
     public:
-        virtual void Draw(ObjectContainer &) const= 0;
+        virtual void Draw(ObjectContainer &) const = 0;
     };
 }

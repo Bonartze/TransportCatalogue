@@ -12,6 +12,46 @@ namespace svg {
         context.out << std::endl;
     }
 
+
+    std::ostream &operator<<(std::ostream &os, const std::optional<StrokeLineCap> &stroke_line_cap) {
+        std::string cap_string;
+        switch (*stroke_line_cap) {
+            case StrokeLineCap::BUTT:
+                cap_string = "butt";
+                break;
+            case StrokeLineCap::ROUND:
+                cap_string = "round";
+                break;
+            case StrokeLineCap::SQUARE:
+                cap_string = "square";
+        }
+        os << " stroke-linecap=\"" << cap_string << "\"";
+        return os;
+    }
+
+    std::ostream &operator<<(std::ostream &os, const std::optional<StrokeLineJoin> &stroke_line_join) {
+        std::string join_string;
+        switch (*stroke_line_join) {
+            case StrokeLineJoin::ARCS:
+                join_string = "arcs";
+                break;
+            case StrokeLineJoin::BEVEL:
+                join_string = "bevel";
+                break;
+            case StrokeLineJoin::MITER:
+                join_string = "miter";
+                break;
+            case StrokeLineJoin::MITER_CLIP:
+                join_string = "miter-clip";
+                break;
+            case StrokeLineJoin::ROUND:
+                join_string = "round";
+        }
+        os << " stroke-linejoin=\"" << join_string << "\"";
+        return os;
+    }
+
+
 // ---------- Circle ------------------
 
 
@@ -30,6 +70,7 @@ namespace svg {
         auto &out = context.out;
         out << "  <circle cx=\"" << center_.x << "\" cy=\"" << center_.y << "\" "s;
         out << "r=\"" << radius_ << "\" "s;
+        RenderAttrs(context.out);
         out << "/>"s;
     }
 
@@ -49,9 +90,16 @@ namespace svg {
                 out << " ";
             }
         }
+        RenderAttrs(context.out);
         out << "\" />";
     }
 // ---------- Text ------------------
+
+    Text::Text(const Text &other) : TextCoordinates(other.TextCoordinates),
+                                    TextShifts(other.TextShifts), FontSize(other.FontSize),
+                                    FontWeight(other.FontWeight),
+                                    FontFamily(other.FontFamily),
+                                    text(other.text) {}
 
     std::string Text::replaceSpecialCharacters() const {
         std::string result;
@@ -71,17 +119,18 @@ namespace svg {
                 result += text[i];
             }
         }
-
         return result;
     }
 
     void Text::RenderObject(const svg::RenderContext &context) const {
         auto &out = context.out;
         auto fText = replaceSpecialCharacters();
-        out << "  <text x=\"" << TextCoordinates.x << "\" " << "y=\"" << TextCoordinates.y << "\"" << " dx=\""
+        out << "  <text ";
+        RenderAttrs(context.out);
+        out << " x=\"" << TextCoordinates.x << "\" " << "y=\"" << TextCoordinates.y << "\"" << " dx=\""
             << TextShifts.x
             << "\" dy=\"" << TextShifts.y << "\" font-size=\"" << FontSize << "\" font-family=\"" << FontFamily
-            << "\" font-weight=\"" << FontWeight << "\">" << fText << "</text>";
+            << "\" font-weight=\"" << FontWeight << "\">" << fText << " </text>";
     }
 
     Text &Text::SetPosition(svg::Point pos) {
@@ -117,29 +166,18 @@ namespace svg {
 
 // ---------- Document ------------------
 
-    /* template<class Obj>
-     void Document::Add(Obj obj) {
-         DocumentFabric.emplace_back(std::make_unique<Obj>(std::move(obj)));
-     }
- */
-    void Document::Add(Circle circle) {
-        DocumentFabric.emplace_back(std::make_unique<Circle>(std::move(circle)));
-    }
-
-    void Document::Add(Polyline polyline) {
-        DocumentFabric.emplace_back(std::make_unique<Polyline>(std::move(polyline)));
-    }
-
-    void Document::Add(Text text) {
-        DocumentFabric.emplace_back(std::make_unique<Text>(std::move(text)));
-    }
 
     void Document::AddPtr(std::unique_ptr<Object> &&obj) {
         DocumentFabric.emplace_back(std::move(obj));
     }
 
+
+
     void Document::Render(std::ostream &out) const {
+        out << "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
+               "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n";
         for (auto &object: DocumentFabric)
             object->Render(RenderContext(out));
+        out << "</svg>";
     }
 }
