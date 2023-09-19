@@ -2,55 +2,137 @@
 
 #include <iostream>
 #include <map>
+#include <sstream>
 #include <string>
 #include <vector>
+#include <variant>
 
 namespace json {
 
-class Node;
-// Сохраните объявления Dict и Array без изменения
-using Dict = std::map<std::string, Node>;
-using Array = std::vector<Node>;
+    class Node;
+
+    using Number = std::variant<int, double>;
+    using Dict = std::map<std::string, Node>;
+    using Array = std::vector<Node>;
 
 // Эта ошибка должна выбрасываться при ошибках парсинга JSON
-class ParsingError : public std::runtime_error {
-public:
-    using runtime_error::runtime_error;
-};
+    class ParsingError : public std::runtime_error {
+    public:
+        using runtime_error::runtime_error;
+    };
 
-class Node {
-public:
-   /* Реализуйте Node, используя std::variant */
+    class Node {
+        using Value = std::variant<std::nullptr_t, Array, Dict, bool, int, double, std::string>;
+    public:
 
-    explicit Node(Array array);
-    explicit Node(Dict map);
-    explicit Node(int value);
-    explicit Node(std::string value);
+/*
+        std::ostream &operator<<(std::ostream &out);
+*/
 
-    const Array& AsArray() const;
-    const Dict& AsMap() const;
-    int AsInt() const;
-    const std::string& AsString() const;
+        /* Реализуйте Node, используя std::variant */
+        bool operator==(const Node &another_node) const;
 
-private:
-    Array as_array_;
-    Dict as_map_;
-    int as_int_ = 0;
-    std::string as_string_;
-};
+        bool operator!=(const Node &another_node) const;
 
-class Document {
-public:
-    explicit Document(Node root);
+        Node();
 
-    const Node& GetRoot() const;
+        Node(bool);
 
-private:
-    Node root_;
-};
+        Node(Value);
 
-Document Load(std::istream& input);
+        Node(Number);
 
-void Print(const Document& doc, std::ostream& output);
+        Node(int);
+
+        Node(double);
+
+        Node(Array);
+
+        Node(std::string);
+
+        Node(Dict);
+
+        Node(nullptr_t);
+
+        /* explicit Node(Array array);
+
+         explicit Node(Dict map);
+
+         explicit Node(int value);
+
+         explicit Node(std::string value);*/
+
+        [[nodiscard]]
+
+        const Array &AsArray() const;
+
+        [[nodiscard]] const Dict &AsMap() const;
+
+        [[nodiscard]] int AsInt() const;
+
+        [[nodiscard]] const std::string &AsString() const;
+
+        [[nodiscard]] double AsDouble() const;
+
+        [[nodiscard]] bool AsBool() const;
+
+        [[nodiscard]] const Value &GetValue() const {
+            return value_;
+        }
+
+        [[nodiscard]] bool IsInt() const {
+            return std::holds_alternative<int>(value_);
+        }
+
+        [[nodiscard]] bool IsDouble() const {
+            return std::holds_alternative<double>(value_) || IsInt();
+        }
+
+        [[nodiscard]] bool IsPureDouble() const {
+            return std::holds_alternative<double>(value_);
+        }
+
+        [[nodiscard]] bool IsBool() const {
+            return std::holds_alternative<bool>(value_);
+        }
+
+        [[nodiscard]] bool IsMap() const {
+            return std::holds_alternative<Dict>(value_);
+        }
+
+        [[nodiscard]] bool IsString() const {
+            return std::holds_alternative<std::string>(value_);
+        }
+
+        [[nodiscard]] bool IsNull() const {
+            return std::holds_alternative<nullptr_t>(value_);
+        }
+
+        [[nodiscard]] bool IsArray() const {
+            return std::holds_alternative<Array>(value_);
+        }
+
+        [[nodiscard]] bool IsDict() const {
+            return std::holds_alternative<Dict>(value_);
+        }
+
+
+    private:
+        Value value_;
+    };
+
+    class Document {
+    public:
+        explicit Document(Node root);
+
+        const Node &GetRoot() const;
+
+    private:
+        Node root_;
+    };
+
+    Document Load(std::istream &input);
+
+    void Print(const Document &doc, std::ostream &output);
 
 }  // namespace json
