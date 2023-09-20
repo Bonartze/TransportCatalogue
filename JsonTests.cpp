@@ -254,7 +254,7 @@ namespace {
 
 }  // namespace
 
-int main() {
+/*int main() {
 
     TestNull();  //work
     TestNumbers();  //work
@@ -264,4 +264,4 @@ int main() {
     TestMap(); //work
     TestErrorHandling(); //work
     Benchmark();
-}
+}*/

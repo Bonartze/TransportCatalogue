@@ -2,21 +2,7 @@
 
 namespace RouteImitation {
 
-    std::size_t PairHash::operator()(const std::pair<Stop *, Stop *> &p) const {  //hashing pairs<Stop*, Stop*>
-        std::hash<const void *> hasher;
-        return hasher(p.first) ^ hasher(p.second);
-    }
-
-
-    bool Stop::operator==(const Stop &other) const {
-        return ::std::tie(coordinates.lng, coordinates.lat) == std::tie(other.coordinates.lng, other.coordinates.lat);
-    }
-
-    size_t HashStop::operator()(const Stop &stop) const {
-        return 37 + 37 * (int) stop.coordinates.lng;
-    }
-
-    void TransportCatalogue::AddBusRouteStop(size_t number, std::string &stop_name) {
+    void TransportCatalogue::AddBusRouteStop(size_t number, const std::string &stop_name) {
         buses_in_stops[&stops[stop_name]].insert(number);
         if (routes[number]->type == 'c')
             routes[number]->stops_number++;
@@ -63,13 +49,15 @@ namespace RouteImitation {
         routes[number]->type = c;
     }
 
-    void TransportCatalogue::AddStopDistances(std::string &name_from, std::string &name_to, size_t distance) {
+    void
+    TransportCatalogue::AddStopDistances(const std::string &name_from, const std::string &name_to, size_t distance) {
         stops[name_to].name = name_to;
         stop_distances[{&stops[name_from], &stops[name_to]}] = distance;
     }
 
-    void TransportCatalogue::AddStop(std::string &name, Geographic::Coordinates coordinates) {
-        stops[name] = Stop(coordinates, name);
+    void TransportCatalogue::AddStop(const std::string &name, Geographic::Coordinates coordinates) {
+           stops[name] = Stop(coordinates, name);
+        //stops.insert({name, Stop(coordinates, name)});
     }
 
     std::unordered_map<size_t, Bus *> &TransportCatalogue::GetRoutes() {
@@ -77,7 +65,7 @@ namespace RouteImitation {
     }
 
 
-    std::unordered_set<size_t> &TransportCatalogue::GetBusesInStop(std::string &stop_name) {
+    std::unordered_set<size_t> &TransportCatalogue::GetBusesInStop(const std::string &stop_name) {
         return buses_in_stops[&stops[stop_name]];
     }
 

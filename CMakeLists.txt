@@ -5,6 +5,4 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(TransportManual main.cpp
         transport_catalogue.cpp
-        input_reader.cpp
-        input_reader.cpp
-        stat_reader.cpp)
+)

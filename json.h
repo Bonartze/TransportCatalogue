@@ -15,7 +15,6 @@ namespace json {
     using Dict = std::map<std::string, Node>;
     using Array = std::vector<Node>;
 
-// Эта ошибка должна выбрасываться при ошибках парсинга JSON
     class ParsingError : public std::runtime_error {
     public:
         using runtime_error::runtime_error;
@@ -25,11 +24,6 @@ namespace json {
         using Value = std::variant<std::nullptr_t, Array, Dict, bool, int, double, std::string>;
     public:
 
-/*
-        std::ostream &operator<<(std::ostream &out);
-*/
-
-        /* Реализуйте Node, используя std::variant */
         bool operator==(const Node &another_node) const;
 
         bool operator!=(const Node &another_node) const;
@@ -54,13 +48,6 @@ namespace json {
 
         Node(nullptr_t);
 
-        /* explicit Node(Array array);
-
-         explicit Node(Dict map);
-
-         explicit Node(int value);
-
-         explicit Node(std::string value);*/
 
         [[nodiscard]]
 
@@ -135,4 +122,4 @@ namespace json {
 
     void Print(const Document &doc, std::ostream &output);
 
-}  // namespace json
+}

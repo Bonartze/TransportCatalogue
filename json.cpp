@@ -321,27 +321,27 @@ namespace json {
         if (value.IsDouble()) {
             ctx.out << value.AsDouble();
         } else if (value.IsString()) {
-            ctx.out << '\"' << value.AsString() << '\"';
+            ctx.out << "\t\"" << value.AsString() << '\"';
         } else if (value.IsBool()) {
             if (value.AsBool())
-                ctx.out << "true";
+                ctx.out << "\ttrue";
             else
-                ctx.out << "false";
+                ctx.out << "\tfalse";
         } else if (value.IsArray()) {
-            ctx.out << "[ ";
+            ctx.out << "[";
             for (auto &val: value.AsArray()) {
                 PrintValue(val, ctx);
-                ctx.out << ' ';
+                ctx.out ;
             }
             ctx.out << "]";
         } else if (value.IsDict()) {
-            ctx.out << "{ ";
+            ctx.out << "\n {\n";
             for (const auto &[key, val]: value.AsMap()) {
-                ctx.out << "\"" << key << "\": ";
+                ctx.out << "\t\"" << key << "\": ";
                 PrintValue(val, ctx);
-                ctx.out << ' ';
+                ctx.out << '\n';
             }
-            ctx.out << "}";
+            ctx.out << " }\n";
         } else
             ctx.out << nullptr;
     }

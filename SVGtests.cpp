@@ -90,6 +90,7 @@ void DrawPicture(const Container &container, svg::ObjectContainer &target) {
     using namespace std;
     DrawPicture(begin(container), end(container), target);
 }
+/*
 
 int main() {
     using namespace svg;
@@ -116,3 +117,4 @@ int main() {
     doc.Add(std::move(c));
     doc.Render(cout);
 }
+*/

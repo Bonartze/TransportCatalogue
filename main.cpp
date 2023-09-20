@@ -1,10 +1,12 @@
-#include "input_reader.h"
-#include "stat_reader.h"
+#include "json_reader.h"
+#include "transport_catalogue.h"
 
 int main() {
-    InputData::FillTransportManual input;
-    input.GetData();
-    input.CallTransportManual();
-    Display::Data::RequestData(input);
+    RouteImitation::TransportCatalogue tc;
+    HandlingGettingRequests::FillingCatalogue fc(tc);
+    fc.FillFileData("test.txt");
+    fc.GetParsedJsonData();
+    fc.FillingData();
+    fc.DisplayResultRequest();
     return 0;
 }
