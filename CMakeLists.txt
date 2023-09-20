@@ -4,7 +4,7 @@ project(TransportCatalogue)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(TransportCatalogue
-        json.cpp TransportCatalogue/main.cpp
+        json.cpp main.cpp
         svg.cpp
         transport_catalogue.cpp domain.cpp
         json_reader.cpp map_renderer.cpp
