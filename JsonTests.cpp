@@ -5,28 +5,13 @@
 #include <variant>
 #include <iostream>
 #include "json.h"
+#include "JsonTests.hpp"
 
-//using namespace json;
 using namespace std::literals;
 using namespace json;
 
-namespace {
+namespace JsonTest {
 
-// Ниже даны тесты, проверяющие JSON-библиотеку.
-// Можете воспользоваться ими, чтобы протестировать свой код.
-// Раскомментируйте их по мере работы.
-
-
-    json::Document LoadJSON(const std::string &s) {
-        std::istringstream strm(s);
-        return json::Load(strm);
-    }
-
-    std::string Print(const Node &node) {
-        std::ostringstream out;
-        Print(Document{node}, out);
-        return out.str();
-    }
 
     void MustFailToLoad(const std::string &s) {
         try {
@@ -34,7 +19,7 @@ namespace {
             std::cerr << "ParsingError exception is expected on '"sv << s << "'"sv << std::endl;
             assert(false);
         } catch (const json::ParsingError &) {
-            // ok
+
         } catch (const std::exception &e) {
             std::cerr << "exception thrown: "sv << e.what() << std::endl;
             assert(false);
@@ -44,22 +29,6 @@ namespace {
         }
     }
 
-    template<typename Fn>
-    void MustThrowLogicError(Fn fn) {
-        try {
-            fn();
-            std::cerr << "logic_error is expected"sv << std::endl;
-            assert(false);
-        } catch (const std::logic_error &) {
-            // ok
-        } catch (const std::exception &e) {
-            std::cerr << "exception thrown: "sv << e.what() << std::endl;
-            assert(false);
-        } catch (...) {
-            std::cerr << "Unexpected error"sv << std::endl;
-            assert(false);
-        }
-    }
 
     void TestNull() {
         Node null_node;
@@ -74,14 +43,12 @@ namespace {
         Node null_node1{nullptr};
         assert(null_node1.IsNull());
 
-        //   assert(Print(null_node) == "null"s);
         assert(null_node == null_node1);
         assert(!(null_node != null_node1));
 
         const Node node = LoadJSON("null"s).GetRoot();
         assert(node.IsNull());
         assert(node == null_node);
-        // Пробелы, табуляции и символы перевода строки между токенами JSON файла игнорируются
         assert(LoadJSON(" \t\r\n\n\r null \t\r\n\n\r "s).GetRoot() == null_node);
     }
 
@@ -90,19 +57,16 @@ namespace {
         const Node int_node{42};
         assert(int_node.IsInt());
         assert(int_node.AsInt() == 42);
-        // целые числа являются подмножеством чисел с плавающей запятой
         assert(int_node.IsDouble());
-        // Когда узел хранит int, можно получить соответствующее ему double-значение
         assert(int_node.AsDouble() == 42.0);
         assert(!int_node.IsPureDouble());
         assert(int_node == Node{42});
-        // int и double - разные типы, поэтому не равны, даже когда хранят
         assert(int_node != Node{42.0});
 
         const Node dbl_node{123.45};
         assert(dbl_node.IsDouble());
         assert(dbl_node.AsDouble() == 123.45);
-        assert(dbl_node.IsPureDouble());  // Значение содержит число с плавающей запятой
+        assert(dbl_node.IsPureDouble());
         assert(!dbl_node.IsInt());
 
         assert(Print(int_node) == "42"s);
@@ -119,7 +83,6 @@ namespace {
         assert(LoadJSON("-123456"s).GetRoot().AsInt() == -123456);
         assert(LoadJSON("0").GetRoot() == Node{0});
         assert(LoadJSON("0.0").GetRoot() == Node{0.0});
-        // Пробелы, табуляции и символы перевода строки между токенами JSON файла игнорируются
         assert(LoadJSON(" \t\r\n\n\r 0.0 \t\r\n\n\r ").GetRoot() == Node{0.0});
     }
 
@@ -127,16 +90,8 @@ namespace {
         Node str_node{"Hello, \"everybody\""s};
         assert(str_node.IsString());
         assert(str_node.AsString() == "Hello, \"everybody\""s);
-
         assert(!str_node.IsInt());
         assert(!str_node.IsDouble());
-
-        //   assert(Print(str_node) == "\"Hello, \\\"everybody\\\"\""s);
-
-        //     assert(LoadJSON(Print(str_node)).GetRoot() == str_node);
-        //    const std::string escape_chars
-        ///            = R"("\r\n\t\"\\")"s;  // При чтении строкового литерала последовательности \r,\n,\t,\\,\"
-        //    assert(Print(LoadJSON(escape_chars).GetRoot()) == "\"\\r\\n\t\\\"\\\\\""s);
         assert(LoadJSON("\t\r\n\n\r \"Hello\" \t\r\n\n\r ").GetRoot() == Node{"Hello"s});
     }
 
@@ -169,7 +124,6 @@ namespace {
         assert(LoadJSON("[1,1.23,\"Hello\"]"s).GetRoot() == arr_node);
         assert(LoadJSON(Print(arr_node)).GetRoot() == arr_node);
         assert(LoadJSON(R"(  [ 1  ,  1.23,  "Hello"   ]   )"s).GetRoot() == arr_node);
-        // Пробелы, табуляции и символы перевода строки между токенами JSON файла игнорируются
         assert(LoadJSON("[ 1 \r \n ,  \r\n\t 1.23, \n \n  \t\t  \"Hello\" \t \n  ] \n  "s).GetRoot()
                == arr_node);
     }
@@ -251,17 +205,15 @@ namespace {
                   << std::endl;
     }
 
+    void RunAllJsonTests() {
+        TestNull();
+        TestNumbers();
+        TestStrings();
+        TestBool();
+        TestArray();
+        TestMap();
+        TestErrorHandling();
+        Benchmark();
+    }
+}
 
-}  // namespace
-
-/*int main() {
-
-    TestNull();  //work
-    TestNumbers();  //work
-    TestStrings(); //work but not properly
-    TestBool();  //work
-    TestArray(); //work
-    TestMap(); //work
-    TestErrorHandling(); //work
-    Benchmark();
-}*/

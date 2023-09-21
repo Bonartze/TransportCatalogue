@@ -2,7 +2,7 @@
 
 namespace RouteImitation {
 
-    void TransportCatalogue::AddBusRouteStop(size_t number, const std::string &stop_name) {
+    void TransportCatalogue::AddBusRouteStop(const std::string& number, const std::string &stop_name) {
         buses_in_stops[&stops[stop_name]].insert(number);
         if (routes[number]->type == 'c')
             routes[number]->stops_number++;
@@ -44,7 +44,7 @@ namespace RouteImitation {
                     (double) routes[number]->route_length_computed / routes[number]->route_length_direct;
     }
 
-    void TransportCatalogue::AddTag(size_t number, char c) {
+    void TransportCatalogue::AddTag(const std::string& number, char c) {
         routes[number] = new Bus();
         routes[number]->type = c;
     }
@@ -60,12 +60,12 @@ namespace RouteImitation {
         //stops.insert({name, Stop(coordinates, name)});
     }
 
-    std::unordered_map<size_t, Bus *> &TransportCatalogue::GetRoutes() {
+    std::unordered_map<std::string, Bus *> &TransportCatalogue::GetRoutes() {
         return routes;
     }
 
 
-    std::unordered_set<size_t> &TransportCatalogue::GetBusesInStop(const std::string &stop_name) {
+    std::unordered_set<std::string> &TransportCatalogue::GetBusesInStop(const std::string &stop_name) {
         return buses_in_stops[&stops[stop_name]];
     }
 

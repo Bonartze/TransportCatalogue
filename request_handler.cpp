@@ -15,12 +15,12 @@ namespace request {
     void RequestHandler::AddBusStat(const std::string &number,                                          //Facade
                                     std::variant<std::vector<json::Node>,
                                             std::string> &stops, bool is_roundtrip) {
-        db_.AddTag(stoul(number), is_roundtrip ? 'c' : 'u');
+        db_.AddTag(number, is_roundtrip ? 'c' : 'u');
         if (std::holds_alternative<std::string>(stops)) {
-            db_.AddBusRouteStop(stoul(number), std::get<std::string>(stops));
+            db_.AddBusRouteStop(number, std::get<std::string>(stops));
         } else {
             for (auto &stop: std::get<std::vector<json::Node>>(stops)) {
-                db_.AddBusRouteStop(stoul(number), stop.AsString());
+                db_.AddBusRouteStop(number, stop.AsString());
             }
         }
     }
@@ -30,7 +30,7 @@ namespace request {
         auto temp = db_.GetBusesInStop(stop_name);
         std::vector<json::Node> tmp;
         for (const auto &i: temp) {
-            tmp.push_back(std::move(json::Node(int(i))));
+            tmp.push_back(std::move(json::Node(i)));
         }
         output_json_format.push_back(json::Node({{"buses",      json::Node{tmp}},
                                                  {"request_id", json::Node{id}}}));
@@ -40,10 +40,10 @@ namespace request {
                                        std::vector<json::Node> &output_json_format) {
         std::vector<json::Node> v;
         output_json_format.push_back(json::Node{
-                {{{"curvature", json::Node(db_.GetRoutes().at(stoul(number))->curvature)},
+                {{{"curvature", json::Node(db_.GetRoutes().at(number)->curvature)},
                   {"request_id", json::Node(id)},
-                  {"route_length", json::Node((int) db_.GetRoutes().at(stoul(number))->route_length_computed)},
-                  {"stop_count", json::Node((int) db_.GetRoutes().at(stoul(number))->stops_number)},
-                  {"unique_stop_count", json::Node((int) db_.GetRoutes().at(stoul(number))->unique_stops.size())}}}});
+                  {"route_length", json::Node((int) db_.GetRoutes().at(number)->route_length_computed)},
+                  {"stop_count", json::Node((int) db_.GetRoutes().at(number)->stops_number)},
+                  {"unique_stop_count", json::Node((int) db_.GetRoutes().at(number)->unique_stops.size())}}}});
     }
 }

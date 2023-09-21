@@ -112,7 +112,7 @@ namespace json {
     public:
         explicit Document(Node root);
 
-        const Node &GetRoot() const;
+        [[nodiscard]]const Node &GetRoot() const;
 
     private:
         Node root_;

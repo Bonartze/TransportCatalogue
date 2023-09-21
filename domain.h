@@ -28,7 +28,7 @@ namespace RouteImitation {
 
 
     struct Bus {
-        size_t stops_number;
+        std::size_t stops_number;
         std::unordered_set<Stop, HashStop> unique_stops; // unique stops
         double route_length_direct;  // direct route length
         size_t route_length_computed; // real route length

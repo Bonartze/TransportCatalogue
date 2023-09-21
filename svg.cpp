@@ -96,6 +96,7 @@ namespace svg {
 // ---------- Text ------------------
 
 
+
     std::string Text::replaceSpecialCharacters() const {
         std::string result;
 

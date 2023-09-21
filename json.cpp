@@ -310,7 +310,7 @@ namespace json {
 
 
         // Возвращает новый контекст вывода с увеличенным смещением
-        PrintContext Indented() const {
+        [[nodiscard]] PrintContext Indented() const {
             return {out, indent_step, indent_step + indent};
         }
     };
@@ -324,14 +324,14 @@ namespace json {
             ctx.out << "\t\"" << value.AsString() << '\"';
         } else if (value.IsBool()) {
             if (value.AsBool())
-                ctx.out << "\ttrue";
+                ctx.out << "true";
             else
-                ctx.out << "\tfalse";
+                ctx.out << "false";
         } else if (value.IsArray()) {
             ctx.out << "[";
             for (auto &val: value.AsArray()) {
                 PrintValue(val, ctx);
-                ctx.out ;
+                ctx.out<<' ';
             }
             ctx.out << "]";
         } else if (value.IsDict()) {

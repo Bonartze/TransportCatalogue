@@ -1,19 +1,20 @@
 #include "map_renderer.h"
 #include <fstream>
+
 namespace renderer {
     bool IsZero(double value) {
         return std::abs(value) < EPSILON;
     }
 
     DrawRoute::DrawRoute(std::unordered_map<std::string, RouteImitation::Stop> &AllStops,
-                         std::unordered_map<size_t, RouteImitation::Bus *> &route)
+                         std::unordered_map<std::string, RouteImitation::Bus *> &route)
             : routes(route), stops_coordinates(AllStops) {
         for (auto &[bus_stop, bus_stop_coordinates]: stops_coordinates)
             AllCords.emplace_back(bus_stop_coordinates.coordinates);
     }
 
     void DrawRoute::SetAll(std::unordered_map<std::string, RouteImitation::Stop> &AllStops,
-                           std::unordered_map<size_t, RouteImitation::Bus *> &route) {
+                           std::unordered_map<std::string, RouteImitation::Bus *> &route) {
         routes = route;
         stops_coordinates = AllStops;
         for (auto &[bus_stop, bus_stop_coordinates]: stops_coordinates)
@@ -42,13 +43,15 @@ namespace renderer {
         }
         for (const auto &[bus_number, bus]: routes) {
             if (bus->routes_.back()->coordinates != bus->routes_.front()->coordinates) {
-                doc.Add(svg::Text().SetPosition(sp(bus->routes_.front()->coordinates)).SetData(std::to_string(
-                        bus_number) + " start").SetFontSize(20).SetStrokeColor("Red").SetFillColor("Red"));
+                doc.Add(svg::Text().SetPosition(sp(bus->routes_.front()->coordinates)).SetData(
+                        bus_number + " start").SetFontSize(params.line_width).SetStrokeColor("Red").SetFillColor(
+                        "Red"));
                 doc.Add(svg::Text().SetPosition(sp(bus->routes_.back()->coordinates)).SetData(
-                        std::to_string(bus_number) + " end").SetFontSize(20).SetStrokeColor("Red").SetFillColor("Red"));
+                        bus_number + " end").SetFontSize(params.line_width).SetStrokeColor("Red").SetFillColor("Red"));
             } else
-                doc.Add(svg::Text().SetPosition(sp(bus->routes_.front()->coordinates)).SetData(std::to_string(
-                        bus_number) + " start - end").SetFontSize(20).SetStrokeColor("Red").SetFillColor("Red"));
+                doc.Add(svg::Text().SetPosition(sp(bus->routes_.front()->coordinates)).SetData(
+                        bus_number + " start - end").SetFontSize(params.bus_label_font_size).SetStrokeColor(
+                        "Red").SetFillColor("Red"));
         }
         std::fstream f(file_name);
         doc.Render(f);

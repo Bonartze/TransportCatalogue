@@ -3,7 +3,12 @@
 #include "svg.h"
 #include <cmath>
 
-namespace {
+#
+
+
+#include "SVGtests.hpp"
+
+namespace SVGtest {
     svg::Polyline CreateStar(svg::Point center, double outer_rad, double inner_rad, int num_rays) {
         using namespace svg;
         Polyline polyline;
@@ -18,48 +23,33 @@ namespace {
         }
         return polyline;
     }
-}
 
 
-namespace shapes {
+    namespace shapes {
 
-    class Triangle : public svg::Drawable {
-    public:
-        Triangle(svg::Point p1, svg::Point p2, svg::Point p3)
+        Triangle::Triangle(svg::Point p1, svg::Point p2, svg::Point p3)
                 : p1_(p1), p2_(p2), p3_(p3) {
         }
 
-        void Draw(svg::ObjectContainer &container) const override {
+        void Triangle::Draw(svg::ObjectContainer &container) const {
             container.Add(svg::Polyline().AddPoint(p1_).AddPoint(p2_).AddPoint(p3_).AddPoint(p1_));
         }
 
-    private:
-        svg::Point p1_, p2_, p3_;
-    };
 
-    class Star : public svg::Drawable {
-    public:
-        Star(svg::Point p, double b_l, double i_r, int b_n) : centre_(p),
-                                                              beam_length(b_l), inside_radios(i_r), beam_number(b_n) {};
+        Star::Star(svg::Point p, double b_l, double i_r, int b_n) : centre_(p),
+                                                                    beam_length(b_l), inside_radios(i_r),
+                                                                    beam_number(b_n) {};
 
-        void Draw(svg::ObjectContainer &container) const override {
+        void Star::Draw(svg::ObjectContainer &container) const {
             container.Add(
                     CreateStar(centre_, beam_length, inside_radios, beam_number).SetFillColor("red").SetStrokeColor(
                             "black"));
         }
 
-    private:
-        svg::Point centre_;
-        double beam_length;
-        double inside_radios;
-        int beam_number;
-    };
 
-    class Snowman : public svg::Drawable {
-    public:
-        Snowman(svg::Point c_, int r) : centre_(c_), radios(r) {}
+        Snowman::Snowman(svg::Point c_, int r) : centre_(c_), radios(r) {}
 
-        void Draw(svg::ObjectContainer &container) const override {
+        void Snowman::Draw(svg::ObjectContainer &container) const {
             container.Add(
                     svg::Circle().SetCenter({centre_.x, centre_.y + 5 * radios}).SetRadius(2 * radios).SetFillColor(
                             "rgb(240,240,240)").SetStrokeColor("black"));
@@ -70,51 +60,43 @@ namespace shapes {
                     "rgb(240,240,240)").SetStrokeColor("black"));
         }
 
-    private:
-        svg::Point centre_;
-        int radios;
-    };
+    }
 
-}
+    void RunAllTests() {
+        std::stringstream ss;
 
+        using namespace svg;
+        using namespace std;
 
-template<typename DrawableIterator>
-void DrawPicture(DrawableIterator begin, DrawableIterator end, svg::ObjectContainer &target) {
-    for (auto it = begin; it != end; ++it) {
-        (*it)->Draw(target);
+        Color none_color;
+        ss << none_color << endl;
+
+        Color purple{"purple"s};
+        ss << purple << endl;
+
+        Color rgb = Rgb{100, 200, 255};
+        ss << rgb << endl;
+
+        Color rgba = Rgba{100, 200, 255, 0.5};
+        ss << rgba << endl;
+
+        Circle c;
+        c.SetRadius(3.5).SetCenter({1.0, 2.0});
+        c.SetFillColor(rgba);
+        c.SetStrokeColor(purple);
+
+        Document doc;
+        doc.Add(std::move(c));
+        doc.Render(ss);
+        assert(ss.str() == "none\n"
+                           "purple\n"
+                           "rgb(100,200,255)\n"
+                           "rgba(100,200,255,0.5)\n"
+                           "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
+                           "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n"
+                           "  <rect width=\"100%\" height=\"100%\" fill=\"white\" />\n"
+                           "  <circle cx=\"1\" cy=\"2\" r=\"3.5\"  fill=\"rgba(100,200,255,0.5)\" stroke=\"purple\"/>\n"
+                           "</svg>");
     }
 }
 
-template<typename Container>
-void DrawPicture(const Container &container, svg::ObjectContainer &target) {
-    using namespace std;
-    DrawPicture(begin(container), end(container), target);
-}
-/*
-
-int main() {
-    using namespace svg;
-    using namespace std;
-
-    Color none_color;
-    cout << none_color << endl; // none
-
-    Color purple{"purple"s};
-    cout << purple << endl; // purple
-
-    Color rgb = Rgb{100, 200, 255};
-    cout << rgb << endl; // rgb(100,200,255)
-
-    Color rgba = Rgba{100, 200, 255, 0.5};
-    cout << rgba << endl; // rgba(100,200,255,0.5)
-
-    Circle c;
-    c.SetRadius(3.5).SetCenter({1.0, 2.0});
-    c.SetFillColor(rgba);
-    c.SetStrokeColor(purple);
-
-    Document doc;
-    doc.Add(std::move(c));
-    doc.Render(cout);
-}
-*/

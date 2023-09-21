@@ -40,7 +40,7 @@ namespace svg {
     using Color = std::variant<std::monostate, std::string, Rgb, Rgba>;
 
 
-    struct PrintColor {
+     struct PrintColor {
         std::ostream &out;
 
         void operator()(std::monostate) const {

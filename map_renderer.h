@@ -97,7 +97,7 @@ namespace renderer {
 
     class DrawRoute {
     private:
-        std::unordered_map<size_t, RouteImitation::Bus *> &routes;
+        std::unordered_map<std::string, RouteImitation::Bus *> &routes;
         std::unordered_map<std::string, RouteImitation::Stop> &stops_coordinates;
         std::vector<Geographic::Coordinates> AllCords;
         Parameters params;
@@ -110,10 +110,10 @@ namespace renderer {
         DrawRoute() = default;
 
         DrawRoute(std::unordered_map<std::string, RouteImitation::Stop> &,
-                  std::unordered_map<size_t, RouteImitation::Bus *> &route);
+                  std::unordered_map<std::string, RouteImitation::Bus *> &route);
 
         void SetAll(std::unordered_map<std::string, RouteImitation::Stop> &,
-                    std::unordered_map<size_t, RouteImitation::Bus *> &);
+                    std::unordered_map<std::string, RouteImitation::Bus *> &);
 
         void Draw(const std::string& file_name);
 
