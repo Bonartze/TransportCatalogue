@@ -1,7 +1,56 @@
 #include "map_renderer.h"
+#include <fstream>
+namespace renderer {
+    bool IsZero(double value) {
+        return std::abs(value) < EPSILON;
+    }
 
-/*
- * В этом файле вы можете разместить код, отвечающий за визуализацию карты маршрутов в формате SVG.
- * Визуализация маршрутов вам понадобится во второй части итогового проекта.
- * Пока можете оставить файл пустым.
- */
+    DrawRoute::DrawRoute(std::unordered_map<std::string, RouteImitation::Stop> &AllStops,
+                         std::unordered_map<size_t, RouteImitation::Bus *> &route)
+            : routes(route), stops_coordinates(AllStops) {
+        for (auto &[bus_stop, bus_stop_coordinates]: stops_coordinates)
+            AllCords.emplace_back(bus_stop_coordinates.coordinates);
+    }
+
+    void DrawRoute::SetAll(std::unordered_map<std::string, RouteImitation::Stop> &AllStops,
+                           std::unordered_map<size_t, RouteImitation::Bus *> &route) {
+        routes = route;
+        stops_coordinates = AllStops;
+        for (auto &[bus_stop, bus_stop_coordinates]: stops_coordinates)
+            AllCords.emplace_back(bus_stop_coordinates.coordinates);
+    }
+
+    void DrawRoute::Draw(const std::string &file_name) {
+        SphereProjector sp(AllCords.begin(), AllCords.end(), params.width, params.height, params.padding); //for mapping
+        for (const auto &[bus_number, bus]: routes) {   // lines in route
+            auto pl = svg::Polyline();
+            for (const auto &stop: bus->routes_) {
+                pl.AddPoint(sp(stop->coordinates)).SetStrokeColor("black").SetStrokeWidth(
+                        params.line_width).SetStrokeLineCap(svg::StrokeLineCap::ROUND).SetStrokeColor(
+                        "green").SetStrokeLineJoin(svg::StrokeLineJoin::ROUND).SetFillColor("none");
+            }
+            doc.Add(pl);
+        }
+        for (const auto &[stop_name, stop_coordinate_]: stops_coordinates) //Stops in route
+            doc.Add(svg::Circle().SetRadius(params.stop_radius).SetCenter(
+                    sp(stop_coordinate_.coordinates)).SetFillColor("white"));
+        for (const auto &[stop_name, stop_coordinate_]: stops_coordinates) {
+            doc.Add(svg::Text().SetData(stop_name).SetPosition(
+                    sp(stops_coordinates[stop_name].coordinates)).SetFontSize(params.bus_label_font_size).SetOffset(
+                    svg::Point(params.bus_label_offset.at(0), params.bus_label_offset.at(1))).SetStrokeLineJoin(
+                    svg::StrokeLineJoin::ROUND).SetStrokeLineCap(svg::StrokeLineCap::ROUND));
+        }
+        for (const auto &[bus_number, bus]: routes) {
+            if (bus->routes_.back()->coordinates != bus->routes_.front()->coordinates) {
+                doc.Add(svg::Text().SetPosition(sp(bus->routes_.front()->coordinates)).SetData(std::to_string(
+                        bus_number) + " start").SetFontSize(20).SetStrokeColor("Red").SetFillColor("Red"));
+                doc.Add(svg::Text().SetPosition(sp(bus->routes_.back()->coordinates)).SetData(
+                        std::to_string(bus_number) + " end").SetFontSize(20).SetStrokeColor("Red").SetFillColor("Red"));
+            } else
+                doc.Add(svg::Text().SetPosition(sp(bus->routes_.front()->coordinates)).SetData(std::to_string(
+                        bus_number) + " start - end").SetFontSize(20).SetStrokeColor("Red").SetFillColor("Red"));
+        }
+        std::fstream f(file_name);
+        doc.Render(f);
+    }
+}

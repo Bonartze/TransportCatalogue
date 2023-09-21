@@ -7,7 +7,7 @@ namespace request {
     void RequestHandler::AddStopState(const std::string &name_from, Geographic::Coordinates coordinates,
                                       const std::map<std::string, json::Node> &road_distances) {
         for (auto &[name_to, distance]: road_distances)
-            db_.AddStopDistances(name_from, name_to, distance.AsInt());
+            db_.AddStopDistances(name_from, name_to, distance.AsDouble());
         db_.AddStop(name_from, coordinates);
     }
 
@@ -45,6 +45,5 @@ namespace request {
                   {"route_length", json::Node((int) db_.GetRoutes().at(stoul(number))->route_length_computed)},
                   {"stop_count", json::Node((int) db_.GetRoutes().at(stoul(number))->stops_number)},
                   {"unique_stop_count", json::Node((int) db_.GetRoutes().at(stoul(number))->unique_stops.size())}}}});
-        //  json::Print(json::Document(json::Node{v}), stops);
     }
 }

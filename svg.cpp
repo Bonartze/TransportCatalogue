@@ -95,11 +95,6 @@ namespace svg {
     }
 // ---------- Text ------------------
 
-    /*  Text::Text(const Text &other) : TextCoordinates(other.TextCoordinates),
-                                      TextShifts(other.TextShifts), FontSize(other.FontSize),
-                                      FontWeight(other.FontWeight),
-                                      FontFamily(other.FontFamily),
-                                      text(other.text), PathProps<Text>(other) {}*/
 
     std::string Text::replaceSpecialCharacters() const {
         std::string result;
@@ -174,7 +169,8 @@ namespace svg {
 
     void Document::Render(std::ostream &out) const {
         out << "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
-               "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n";
+               "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n"
+            << "  <rect width=\"100%\" height=\"100%\" fill=\"white\" />\n";
         for (auto &object: DocumentFabric)
             object->Render(RenderContext(out));
         out << "</svg>";

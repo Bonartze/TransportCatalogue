@@ -7,6 +7,6 @@ int main() {
     fc.FillFileData("test.txt");
     fc.GetParsedJsonData();
     fc.FillingData();
-    fc.DisplayResultRequest();
+    fc.DisplayResultRequest("result.svg");
     return 0;
 }

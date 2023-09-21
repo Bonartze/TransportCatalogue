@@ -8,4 +8,5 @@ add_executable(TransportCatalogue
         svg.cpp
         transport_catalogue.cpp domain.cpp
         json_reader.cpp map_renderer.cpp
-        request_handler.cpp map_renderer.h)
+        request_handler.cpp)
+
