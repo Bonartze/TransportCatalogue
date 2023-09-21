@@ -25,7 +25,7 @@ namespace HandlingGettingRequests {
                 for (const auto &description_request: value.AsArray()) {
                     if (description_request.AsMap().at("type").AsString() == "Stop") {
                         auto temp_map = description_request.AsMap();
-                        rh.AddStopState(temp_map.at("name").AsString(),
+                        rh.AddStopState(temp_map.at("name").AsString(),             //Filling stops fields
                                         {temp_map.at("latitude").AsDouble(), temp_map.at("longitude").AsDouble()},
                                         temp_map.at("road_distances").AsMap());
                     }
@@ -37,11 +37,11 @@ namespace HandlingGettingRequests {
                             stopsVariant = description_request.AsMap().at("stops").AsArray();
                         else
                             stopsVariant = description_request.AsMap().at("stops").AsString();
-                        rh.AddBusStat(description_request.AsMap().at("name").AsString(),
+                        rh.AddBusStat(description_request.AsMap().at("name").AsString(), // Filling buses fields
                                       stopsVariant, description_request.AsMap().at("is_roundtrip").AsBool());
                     }
                 }
-            } else if (key_request == "stat_requests") {
+            } else if (key_request == "stat_requests") {  //Check request with further responds
                 for (auto &request: value.AsArray()) {
                     if (request.AsMap().at("type").AsString() == "Stop") {
                         rh.GetBusesByStop(request.AsMap().at("name").AsString(), request.AsMap().at("id").AsInt(),
@@ -51,7 +51,7 @@ namespace HandlingGettingRequests {
                                          output_json_data, json_out_data);
                     }
                 }
-            } else if (key_request == "render_settings") {
+            } else if (key_request == "render_settings") {  //Setting up the setting
                 auto CopyNodeInStd = [](auto &vecNodes, auto &vecInt) {
                     for (auto &node: vecNodes)
                         vecInt.push_back(node.AsDouble());

@@ -10,8 +10,9 @@
 using namespace std::literals;
 using namespace json;
 
-namespace JsonTest {
+//Just tests
 
+namespace JsonTest {
 
     void MustFailToLoad(const std::string &s) {
         try {

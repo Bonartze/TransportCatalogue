@@ -12,20 +12,23 @@ namespace RouteImitation {
     class TransportCatalogue {
     public:
         void
-        AddStop(const std::string &, Geographic::Coordinates);   // add stop as member of class's field in unordered_map
+        AddStop(const std::string &, Geographic::Coordinates);   // Add stop as member of class's field in unordered_map
 
-        void AddStopDistances(const std::string &, const std::string &, size_t);
+        void AddStopDistances(const std::string &, const std::string &,
+                              size_t);   // Add pair of the stops and distance between, first parameter is stop from,
+        // the second one is to, third is distance
 
 
-        std::unordered_set<std::string> &GetBusesInStop(const std::string &);
+        std::unordered_set<std::string> &GetBusesInStop(
+                const std::string &);  // return reference to unordered_set with all buses that come across the bus (parameter)
 
-        void AddTag(const std::string&, char c);
+        void AddTag(const std::string &, char c);  // Add tag to route is if it is cycle or uncycle
 
-        std::unordered_map<std::string, Bus *> &GetRoutes();
+        std::unordered_map<std::string, Bus *> &GetRoutes();  // Return reference to all the routes by bus's name
 
-        std::unordered_map<std::string, Stop> &GetStops();
+        std::unordered_map<std::string, Stop> &GetStops();  // Return all the bus stops
 
-        void AddBusRouteStop(const std::string &, const std::string &);
+        void AddBusRouteStop(const std::string &, const std::string &);  // Push in the route of bus new bus stop and calculate all parameters instantly
 
     private:
         std::unordered_map<std::string, Stop> stops;  // O(1) all operation average

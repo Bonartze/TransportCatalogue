@@ -6,7 +6,7 @@
 #pragma once
 
 namespace RouteImitation {
-
+//All the structures related to ways of storing transport catalogue data
     struct Stop;
 
     class HashStop {

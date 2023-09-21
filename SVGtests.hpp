@@ -3,6 +3,9 @@
 #include "svg.h"
 #include <cassert>
 #include <cmath>
+
+//Just tests
+
 namespace SVGtest {
     svg::Polyline CreateStar(svg::Point center, double outer_rad, double inner_rad, int num_rays);
 

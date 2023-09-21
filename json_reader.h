@@ -13,13 +13,13 @@ namespace HandlingGettingRequests {
 
         explicit FillingCatalogue(RouteImitation::TransportCatalogue &);
 
-        void FillFileData(const std::string &);
+        void FillFileData(const std::string &);  //Filling stream by data of the input file
 
-        void FillingData();
+        void GetParsedJsonData();   //Parsing data using Json library
 
-        void GetParsedJsonData();
+        void FillingData();   // Using Json library fill data in transport catalogue
 
-        void DisplayResultRequest(const std::string &);
+        void DisplayResultRequest(const std::string &); // Just drawing routes in a stream(In this project in file)
 
     private:
         renderer::DrawRoute drawing;

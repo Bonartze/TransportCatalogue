@@ -8,16 +8,16 @@ namespace json {
 
         Node LoadNode(istream &input);
 
-        Array LoadArray(istream &input) {
+        Array LoadArray(istream &input) {   //Loading array
             Array result;
             char c;
             while (input >> c, c != ']') {
                 if (c != ',') {
                     input.putback(c);
-                    result.push_back(LoadNode(input));
+                    result.push_back(LoadNode(input));  // Parse element of array
                 }
             }
-            if (c != ']')
+            if (c != ']')                                  //Array doesn't have right format
                 throw ParsingError("Incorrect array's data");
             return result;
         }
@@ -104,7 +104,7 @@ namespace json {
                         throw ParsingError("String parsing error");
                     }
                     const char escaped_char = *(it);
-                    switch (escaped_char) {
+                    switch (escaped_char) {  //check for escape sequence
                         case 'n':
                             s.push_back('\n');
                             break;
@@ -137,15 +137,16 @@ namespace json {
         Node LoadBool(istream &input) {
             char c;
             std::string res;
-            for (size_t i = 0; i < 4; i++) {
+            for (size_t i = 0; i < 4; i++) { // for checking if it's bool value
                 if (input >> c)
                     res += c;
                 else
                     throw ParsingError("Incorrect bool value");
             }
-            if (res == "true" && !isalpha(input.peek()) && !isdigit(input.peek()))
+            if (res == "true" && !isalpha(input.peek()) && !isdigit(input.peek()))   //check for true
                 return Node{true};
-            else if (input >> c; res + c == "false" && !isalpha(input.peek()) && !isdigit(input.peek()))
+            else if (input >> c; res + c == "false" && !isalpha(input.peek()) &&
+                                 !isdigit(input.peek()))  //chech for false
                 return Node{false};
             else
                 throw ParsingError("Incorrect bool value");
@@ -158,10 +159,10 @@ namespace json {
             char c;
             std::string key;
             while (input >> c) {
-                if (c == '"')
-                    getline(input, key, '"');
+                if (c == '"')     //check for symbol
+                    getline(input, key, '"');  // get key
                 else if (c == ':') {
-                    result[key] = LoadNode(input);
+                    result[key] = LoadNode(input);  //Parse value in map
                 } else if (c == '}')
                     break;
             }
@@ -173,7 +174,7 @@ namespace json {
         nullptr_t LoadNull(istream &input) {
             char c;
             std::string null;
-            for (size_t i = 0; i < 4; i++) {
+            for (size_t i = 0; i < 4; i++) {  //check for null value
                 if (input >> c) {
                     null += c;
                 }
@@ -183,7 +184,7 @@ namespace json {
             throw ParsingError("Incorrect nullptr");
         }
 
-        Node LoadNode(istream &input) {
+        Node LoadNode(istream &input) {   //parsing node (start and parsing values method)
             char c;
             input >> c;
             if (c == 'n' && input.peek() == 'u') {
@@ -309,7 +310,6 @@ namespace json {
         }
 
 
-        // Возвращает новый контекст вывода с увеличенным смещением
         [[nodiscard]] PrintContext Indented() const {
             return {out, indent_step, indent_step + indent};
         }
@@ -317,7 +317,7 @@ namespace json {
 
 
     template<typename Value>
-    void PrintValue(const Value &value, const PrintContext &ctx) {
+    void PrintValue(const Value &value, const PrintContext &ctx) {   //Print value
         if (value.IsDouble()) {
             ctx.out << value.AsDouble();
         } else if (value.IsString()) {
@@ -329,16 +329,16 @@ namespace json {
                 ctx.out << "false";
         } else if (value.IsArray()) {
             ctx.out << "[";
-            for (auto &val: value.AsArray()) {
-                PrintValue(val, ctx);
-                ctx.out<<' ';
+            for (auto &val: value.AsArray()) {  //display all values of array
+                PrintValue(val, ctx);          //display as nodes (recursion), 'cause maybe there's array or another map
+                ctx.out << ' ';
             }
             ctx.out << "]";
         } else if (value.IsDict()) {
             ctx.out << "\n {\n";
             for (const auto &[key, val]: value.AsMap()) {
-                ctx.out << "\t\"" << key << "\": ";
-                PrintValue(val, ctx);
+                ctx.out << "\t\"" << key << "\": ";   //display key as string
+                PrintValue(val, ctx);               //display value recursion 'cause maybe there's array or another map
                 ctx.out << '\n';
             }
             ctx.out << " }\n";
@@ -351,4 +351,4 @@ namespace json {
     }
 
 
-}  // namespace json
+}
