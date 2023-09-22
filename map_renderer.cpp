@@ -54,7 +54,8 @@ namespace renderer {
                         bus_number + " start - end").SetFontSize(params.bus_label_font_size).SetStrokeColor(
                         "Red").SetFillColor("Red"));
         }
-        std::fstream f(file_name);
+        std::fstream f;
+        f.open(file_name, std::fstream::out);
         doc.Render(f);
     }
 }
