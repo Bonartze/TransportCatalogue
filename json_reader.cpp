@@ -87,5 +87,7 @@ namespace HandlingGettingRequests {
 
     void FillingCatalogue::DisplayResultRequest(const std::string &file_name) {
         drawing.Draw(file_name);
+        json::Print(json::Document(json_out_data), output_json_data);
+        std::cout<<output_json_data.str();
     }
 }
