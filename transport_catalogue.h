@@ -11,8 +11,7 @@
 namespace RouteImitation {
     class TransportCatalogue {
     public:
-        void
-        AddStop(const std::string &, Geographic::Coordinates);   // Add stop as member of class's field in unordered_map
+        void AddStop(const std::string &, Geographic::Coordinates);   // Add stop as member of class's field in unordered_map
 
         void AddStopDistances(const std::string &, const std::string &,
                               size_t);   // Add pair of the stops and distance between, first parameter is stop from,
@@ -28,7 +27,8 @@ namespace RouteImitation {
 
         std::unordered_map<std::string, Stop> &GetStops();  // Return all the bus stops
 
-        void AddBusRouteStop(const std::string &, const std::string &);  // Push in the route of bus new bus stop and calculate all parameters instantly
+        void AddBusRouteStop(const std::string &,
+                             const std::string &);  // Push in the route of bus new bus stop and calculate all parameters instantly
 
     private:
         std::unordered_map<std::string, Stop> stops;  // O(1) all operation average
