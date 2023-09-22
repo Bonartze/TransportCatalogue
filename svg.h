@@ -113,9 +113,9 @@ namespace svg {
         virtual void RenderObject(const RenderContext &context) const = 0;
     };
 
-    std::ostream &operator<<(std::ostream &os, const std::optional<StrokeLineCap> &);
+    std::ostream &operator<<(std::ostream &, const std::optional<StrokeLineCap> &);
 
-    std::ostream &operator<<(std::ostream &os, const std::optional<StrokeLineJoin> &);
+    std::ostream &operator<<(std::ostream &, const std::optional<StrokeLineJoin> &);
 
     template<typename Owner>
     class PathProps {
