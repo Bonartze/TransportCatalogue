@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="TransportCatalogue"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/ivan/Рабочий стол/dir/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TransportCatalogue">
+				<Option output="/home/ivan/Рабочий стол/dir/cmake-build-debug/TransportCatalogue" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ivan/Рабочий стол/dir/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 TransportCatalogue"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TransportCatalogue/fast">
+				<Option output="/home/ivan/Рабочий стол/dir/cmake-build-debug/TransportCatalogue" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ivan/Рабочий стол/dir/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 TransportCatalogue/fast"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/ivan/Рабочий стол/dir/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/ivan/Рабочий стол/dir/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/ivan/Рабочий\ стол/dir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/ivan/Рабочий стол/dir/JsonTests.cpp">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/JsonTests.hpp">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/SVGtests.cpp">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/SVGtests.hpp">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/domain.cpp">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/domain.h">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/json.cpp">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/json.h">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/json_reader.cpp">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/json_reader.h">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/main.cpp">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/map_renderer.cpp">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/map_renderer.h">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/request_handler.cpp">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/request_handler.h">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/svg.cpp">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/svg.h">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/transport_catalogue.cpp">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/transport_catalogue.h">
+			<Option target="TransportCatalogue"/>
+		</Unit>
+		<Unit filename="/home/ivan/Рабочий стол/dir/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
