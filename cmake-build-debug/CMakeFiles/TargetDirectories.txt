@@ -1,3 +1,0 @@
-/home/ivan/Рабочий стол/dir/cmake-build-debug/CMakeFiles/TransportCatalogue.dir
-/home/ivan/Рабочий стол/dir/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/ivan/Рабочий стол/dir/cmake-build-debug/CMakeFiles/rebuild_cache.dir
