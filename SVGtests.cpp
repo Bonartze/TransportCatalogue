@@ -4,6 +4,8 @@
 #include <cmath>
 #include "SVGtests.hpp"
 
+#include "cmake-build-debug/_deps/googletest-src/googletest/include/gtest/gtest.h"
+
 //Just tests
 
 namespace SVGtest {
@@ -22,11 +24,9 @@ namespace SVGtest {
         return polyline;
     }
 
-
     namespace shapes {
-
         Triangle::Triangle(svg::Point p1, svg::Point p2, svg::Point p3)
-                : p1_(p1), p2_(p2), p3_(p3) {
+            : p1_(p1), p2_(p2), p3_(p3) {
         }
 
         void Triangle::Draw(svg::ObjectContainer &container) const {
@@ -36,33 +36,34 @@ namespace SVGtest {
 
         Star::Star(svg::Point p, double b_l, double i_r, int b_n) : centre_(p),
                                                                     beam_length(b_l), inside_radios(i_r),
-                                                                    beam_number(b_n) {};
+                                                                    beam_number(b_n) {
+        };
 
         void Star::Draw(svg::ObjectContainer &container) const {
             container.Add(
-                    CreateStar(centre_, beam_length, inside_radios, beam_number).SetFillColor("red").SetStrokeColor(
-                            "black"));
+                CreateStar(centre_, beam_length, inside_radios, beam_number).SetFillColor("red").SetStrokeColor(
+                    "black"));
         }
 
 
-        Snowman::Snowman(svg::Point c_, int r) : centre_(c_), radios(r) {}
+        Snowman::Snowman(svg::Point c_, int r) : centre_(c_), radios(r) {
+        }
 
         void Snowman::Draw(svg::ObjectContainer &container) const {
             container.Add(
-                    svg::Circle().SetCenter({centre_.x, centre_.y + 5 * radios}).SetRadius(2 * radios).SetFillColor(
-                            "rgb(240,240,240)").SetStrokeColor("black"));
-            container.Add(
-                    svg::Circle().SetCenter({centre_.x, centre_.y + 2 * radios}).SetRadius(1.5 * radios).SetFillColor(
-                            "rgb(240,240,240)").SetStrokeColor("black"));
-            container.Add(svg::Circle().SetCenter(centre_).SetRadius(radios).SetFillColor(
+                svg::Circle().SetCenter({centre_.x, centre_.y + 5 * radios}).SetRadius(2 * radios).SetFillColor(
                     "rgb(240,240,240)").SetStrokeColor("black"));
+            container.Add(
+                svg::Circle().SetCenter({centre_.x, centre_.y + 2 * radios}).SetRadius(1.5 * radios).SetFillColor(
+                    "rgb(240,240,240)").SetStrokeColor("black"));
+            container.Add(svg::Circle().SetCenter(centre_).SetRadius(radios).SetFillColor(
+                "rgb(240,240,240)").SetStrokeColor("black"));
         }
-
     }
 
-    void RunAllTests() {
+    TEST(SVG_TEST, ALL_RUN) {
+        std::cerr << "SVG tests OK\n";
         std::stringstream ss;
-
         using namespace svg;
         using namespace std;
 
@@ -87,14 +88,13 @@ namespace SVGtest {
         doc.Add(std::move(c));
         doc.Render(ss);
         assert(ss.str() == "none\n"
-                           "purple\n"
-                           "rgb(100,200,255)\n"
-                           "rgba(100,200,255,0.5)\n"
-                           "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
-                           "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n"
-                           "  <rect width=\"100%\" height=\"100%\" fill=\"white\" />\n"
-                           "  <circle cx=\"1\" cy=\"2\" r=\"3.5\"  fill=\"rgba(100,200,255,0.5)\" stroke=\"purple\"/>\n"
-                           "</svg>");
+            "purple\n"
+            "rgb(100,200,255)\n"
+            "rgba(100,200,255,0.5)\n"
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
+            "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n"
+            "  <rect width=\"100%\" height=\"100%\" fill=\"white\" />\n"
+            "  <circle cx=\"1\" cy=\"2\" r=\"3.5\"  fill=\"rgba(100,200,255,0.5)\" stroke=\"purple\"/>\n"
+            "</svg>");
     }
 }
-

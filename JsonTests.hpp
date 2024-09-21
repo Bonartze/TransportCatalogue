@@ -5,6 +5,7 @@
 #include <variant>
 #include <iostream>
 #include "json.h"
+#include <gtest/gtest.h>
 
 #pragma once
 
@@ -14,7 +15,6 @@ using namespace json;
 //Just test
 
 namespace JsonTest {
-
     inline json::Document LoadJSON(const std::string &s) {
         std::istringstream strm(s);
         return json::Load(strm);
@@ -35,7 +35,6 @@ namespace JsonTest {
             std::cerr << "logic_error is expected"sv << std::endl;
             assert(false);
         } catch (const std::logic_error &) {
-
         } catch (const std::exception &e) {
             std::cerr << "exception thrown: "sv << e.what() << std::endl;
             assert(false);
@@ -44,23 +43,4 @@ namespace JsonTest {
             assert(false);
         }
     }
-
-    void TestNull();
-
-    void TestNumbers();
-
-    void TestStrings();
-
-    void TestBool();
-
-    void TestArray();
-
-    void TestMap();
-
-    void TestErrorHandling();
-
-    void Benchmark();
-
-    void RunAllJsonTests();
 }
-

@@ -4,20 +4,19 @@ using namespace std;
 
 namespace json {
     namespace {
-
-
         Node LoadNode(istream &input);
 
-        Array LoadArray(istream &input) {   //Loading array
+        Array LoadArray(istream &input) {
+            //Loading array
             Array result;
             char c;
             while (input >> c, c != ']') {
                 if (c != ',') {
                     input.putback(c);
-                    result.push_back(LoadNode(input));  // Parse element of array
+                    result.push_back(LoadNode(input)); // Parse element of array
                 }
             }
-            if (c != ']')                                  //Array doesn't have right format
+            if (c != ']') //Array doesn't have right format
                 throw ParsingError("Incorrect array's data");
             return result;
         }
@@ -74,7 +73,6 @@ namespace json {
                     try {
                         return std::stoi(parsed_num);
                     } catch (...) {
-
                     }
                 }
                 return std::stod(parsed_num);
@@ -104,7 +102,8 @@ namespace json {
                         throw ParsingError("String parsing error");
                     }
                     const char escaped_char = *(it);
-                    switch (escaped_char) {  //check for escape sequence
+                    switch (escaped_char) {
+                        //check for escape sequence
                         case 'n':
                             s.push_back('\n');
                             break;
@@ -137,16 +136,17 @@ namespace json {
         Node LoadBool(istream &input) {
             char c;
             std::string res;
-            for (size_t i = 0; i < 4; i++) { // for checking if it's bool value
+            for (size_t i = 0; i < 4; i++) {
+                // for checking if it's bool value
                 if (input >> c)
                     res += c;
                 else
                     throw ParsingError("Incorrect bool value");
             }
-            if (res == "true" && !isalpha(input.peek()) && !isdigit(input.peek()))   //check for true
+            if (res == "true" && !isalpha(input.peek()) && !isdigit(input.peek())) //check for true
                 return Node{true};
             else if (input >> c; res + c == "false" && !isalpha(input.peek()) &&
-                                 !isdigit(input.peek()))  //chech for false
+                                 !isdigit(input.peek())) //chech for false
                 return Node{false};
             else
                 throw ParsingError("Incorrect bool value");
@@ -159,10 +159,10 @@ namespace json {
             char c;
             std::string key;
             while (input >> c) {
-                if (c == '"')     //check for symbol
-                    getline(input, key, '"');  // get key
+                if (c == '"') //check for symbol
+                    getline(input, key, '"'); // get key
                 else if (c == ':') {
-                    result[key] = LoadNode(input);  //Parse value in map
+                    result[key] = LoadNode(input); //Parse value in map
                 } else if (c == '}')
                     break;
             }
@@ -174,7 +174,8 @@ namespace json {
         nullptr_t LoadNull(istream &input) {
             char c;
             std::string null;
-            for (size_t i = 0; i < 4; i++) {  //check for null value
+            for (size_t i = 0; i < 4; i++) {
+                //check for null value
                 if (input >> c) {
                     null += c;
                 }
@@ -184,7 +185,8 @@ namespace json {
             throw ParsingError("Incorrect nullptr");
         }
 
-        Node LoadNode(istream &input) {   //parsing node (start and parsing values method)
+        Node LoadNode(istream &input) {
+            //parsing node (start and parsing values method)
             char c;
             input >> c;
             if (c == 'n' && input.peek() == 'u') {
@@ -205,7 +207,6 @@ namespace json {
                 return Node{LoadNumber(input)};
             }
         }
-
     }
 
     bool Node::operator==(const json::Node &another_node) const {
@@ -218,11 +219,14 @@ namespace json {
     }
 
 
-    Node::Node() : value_(nullptr) {}
+    Node::Node() : value_(nullptr) {
+    }
 
-    Node::Node(bool bl) : value_(bl) {}
+    Node::Node(bool bl) : value_(bl) {
+    }
 
-    Node::Node(nullptr_t null) : value_(null) {}
+    Node::Node(nullptr_t null) : value_(null) {
+    }
 
     Node::Node(Number number) {
         if (std::holds_alternative<int>(number))
@@ -232,45 +236,51 @@ namespace json {
     }
 
 
-    Node::Node(int number) : value_(number) {}
+    Node::Node(int number) : value_(number) {
+    }
 
-    Node::Node(double number) : value_(number) {}
+    Node::Node(double number) : value_(number) {
+    }
 
-    Node::Node(Dict map) : value_(std::move(map)) {}
+    Node::Node(Dict map) : value_(std::move(map)) {
+    }
 
-    Node::Node(Array array) : value_(std::move(array)) {}
+    Node::Node(Array array) : value_(std::move(array)) {
+    }
 
-    Node::Node(std::string str) : value_(std::move(str)) {}
+    Node::Node(std::string str) : value_(std::move(str)) {
+    }
 
-    Node::Node(Value value) : value_(std::move(value)) {}
+    Node::Node(Value value) : value_(std::move(value)) {
+    }
 
 
-    const Array &Node::AsArray() const {
+    [[nodiscard]] const Array &Node::AsArray() const {
         if (IsArray()) {
             return get<Array>(value_);
         }
         throw std::logic_error("");
     }
 
-    const Dict &Node::AsMap() const {
+    [[nodiscard]] const Dict &Node::AsMap() const {
         if (IsDict())
             return get<Dict>(value_);
         throw std::logic_error("");
     }
 
-    int Node::AsInt() const {
+    [[nodiscard]] int Node::AsInt() const {
         if (IsInt())
             return get<int>(value_);
         throw std::logic_error("");
     }
 
-    const string &Node::AsString() const {
+    [[nodiscard]] const string &Node::AsString() const {
         if (IsString())
             return get<std::string>(value_);
         throw std::logic_error("");
     }
 
-    double Node::AsDouble() const {
+    [[nodiscard]] double Node::AsDouble() const {
         if (IsPureDouble())
             return get<double>(value_);
         else if (IsInt())
@@ -278,7 +288,7 @@ namespace json {
         throw std::logic_error("");
     }
 
-    bool Node::AsBool() const {
+    [[nodiscard]] bool Node::AsBool() const {
         if (IsBool())
             return get<bool>(value_);
         throw std::logic_error("");
@@ -286,7 +296,7 @@ namespace json {
 
 
     Document::Document(Node root)
-            : root_(std::move(root)) {
+        : root_(std::move(root)) {
     }
 
     const Node &Document::GetRoot() const {
@@ -317,7 +327,8 @@ namespace json {
 
 
     template<typename Value>
-    void PrintValue(const Value &value, const PrintContext &ctx) {   //Print value
+    void PrintValue(const Value &value, const PrintContext &ctx) {
+        //Print value
         if (value.IsDouble()) {
             ctx.out << value.AsDouble();
         } else if (value.IsString()) {
@@ -329,16 +340,17 @@ namespace json {
                 ctx.out << "false";
         } else if (value.IsArray()) {
             ctx.out << "[";
-            for (auto &val: value.AsArray()) {  //display all values of array
-                PrintValue(val, ctx);          //display as nodes (recursion), 'cause maybe there's array or another map
+            for (auto &val: value.AsArray()) {
+                //display all values of array
+                PrintValue(val, ctx); //display as nodes (recursion), 'cause maybe there's array or another map
                 ctx.out << ' ';
             }
             ctx.out << "]";
         } else if (value.IsDict()) {
             ctx.out << "\n {\n";
             for (const auto &[key, val]: value.AsMap()) {
-                ctx.out << "\t\"" << key << "\": ";   //display key as string
-                PrintValue(val, ctx);               //display value recursion 'cause maybe there's array or another map
+                ctx.out << "\t\"" << key << "\": "; //display key as string
+                PrintValue(val, ctx); //display value recursion 'cause maybe there's array or another map
                 ctx.out << '\n';
             }
             ctx.out << " }\n";
@@ -349,6 +361,4 @@ namespace json {
     void Print(const Document &doc, std::ostream &output) {
         PrintValue(doc.GetRoot(), PrintContext{output});
     }
-
-
 }

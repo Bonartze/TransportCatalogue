@@ -3,6 +3,8 @@
 #include "svg.h"
 #include <cassert>
 #include <cmath>
+#include <gtest/gtest.h>
+
 
 //Just tests
 
@@ -11,7 +13,6 @@ namespace SVGtest {
 
 
     namespace shapes {
-
         class Triangle : public svg::Drawable {
         public:
             Triangle(svg::Point p1, svg::Point p2, svg::Point p3);
@@ -45,7 +46,6 @@ namespace SVGtest {
             svg::Point centre_;
             int radios;
         };
-
     }
 
 
