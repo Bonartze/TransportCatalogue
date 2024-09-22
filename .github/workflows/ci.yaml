@@ -45,7 +45,7 @@ jobs:
       - name: Run gtest
         run: sudo chmod +x build/run_tests && build/run_tests
 
-  Check linters:
+  Linters-check:
     runs-on: ubuntu-latest
 
     steps:
