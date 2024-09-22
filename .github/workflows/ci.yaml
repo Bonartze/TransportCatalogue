@@ -42,7 +42,7 @@ jobs:
         with:
           name: build-artifacts
       - name: Check temp
-        run: ls -la build/
+        run: ls
       - name: Run gtest
         run: sudo chmod +x build/run_tests && build/run_tests
 
