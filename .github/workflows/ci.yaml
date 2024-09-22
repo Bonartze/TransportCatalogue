@@ -41,10 +41,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts
-      - name: Check temp
-        run: ls
       - name: Run gtest
-        run: sudo chmod +x build/run_tests && build/run_tests
+        run: sudo chmod +x ./run_tests && ./run_tests
 
 
 
