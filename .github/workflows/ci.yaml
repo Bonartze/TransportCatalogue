@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,7 +21,7 @@ jobs:
         run: mkdir build && cd build && cmake .. && make -j`nproc`
 
 
-  test:
+  Autotests:
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -30,7 +30,7 @@ jobs:
       - name: Run gtest
         run: sudo chmod +x ./run_tests && ./run_tests
 
-  check_linters:
+  Check linters:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
