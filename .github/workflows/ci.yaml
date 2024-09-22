@@ -20,7 +20,7 @@ jobs:
       - name: Installing dependencies
         run: sudo apt-get install g++ make cmake -y
       - name: Processing building
-        run: cmake ../ && make -j`nproc`
+        run: cmake .. && make -j`nproc`
 
   test:
     runs-on: ubuntu-latest
