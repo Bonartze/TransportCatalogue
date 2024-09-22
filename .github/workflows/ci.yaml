@@ -1,4 +1,3 @@
-name: GitHub Actions Demo
 run-name: "CI/CD pipeline"
 on:
   push:
