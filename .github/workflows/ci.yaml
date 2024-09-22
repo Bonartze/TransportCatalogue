@@ -41,11 +41,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts
-
-      - name: Run gtest
-        run: sudo chmod +x build/run_tests && build/run_tests
       - name: Check temp
         run: ls -la build/
+      - name: Run gtest
+        run: sudo chmod +x build/run_tests && build/run_tests
+
 
 
   Linters-check:
