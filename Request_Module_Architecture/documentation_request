@@ -1,5 +1,0 @@
-class RequestHandler - создан для запросов к транспортному каталогу, реализует паттерн фасад, упрощая сложны вызовы методов класса TransportCatalogue одним методом Add*
-void AddBusStat(const std::string, std::variant<std::vector<json::Node>, std::string> &, bool) - добавляет состояние автобуса во все требуемые структуры
-void AddStopState(const std::string &, Geographic::Coordinates, const std::map<std::string, json::Node> &) - добавляет состояние остановки во все требуемые структуры
-void GetStopsByBus(const std::string &, int, std::stringstream&, std::vector<json::Node>&)  - получает соответсвующуюю структуру данных
-void GetBusesByStop(const std::string &, int, std::stringstream &, std::vector<json::Node>&) const - получает соответсвующуюю структуру данных

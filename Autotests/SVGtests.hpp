@@ -1,6 +1,6 @@
 #define _USE_MATH_DEFINES
 
-#include "svg.h"
+#include "../Mapping_src/svg.h"
 #include <cassert>
 #include <cmath>
 #include <gtest/gtest.h>

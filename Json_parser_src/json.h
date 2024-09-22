@@ -6,9 +6,9 @@
 #include <string>
 #include <vector>
 #include <variant>
+
 //Json parser
 namespace json {
-
     class Node;
 
     using Number = std::variant<int, double>;
@@ -21,14 +21,14 @@ namespace json {
     };
 
     class Node {
-        using Value = std::variant<std::nullptr_t, Array, Dict, bool, int, double, std::string>; //Node of recursive Json tree
+        using Value = std::variant<std::nullptr_t, Array, Dict, bool, int, double, std::string>;
+        //Node of recursive Json tree
     public:
-
         bool operator==(const Node &another_node) const;
 
         bool operator!=(const Node &another_node) const;
 
-        Node();          //constructors not explicit to use expression like Node d {AnyValue} to reduce code
+        Node(); //constructors not explicit to use expression like Node d {AnyValue} to reduce code
 
         Node(bool);
 
@@ -101,7 +101,6 @@ namespace json {
             return std::holds_alternative<Dict>(value_);
         }
 
-
     private:
         Value value_;
     };
@@ -110,14 +109,13 @@ namespace json {
     public:
         explicit Document(Node root);
 
-        [[nodiscard]]const Node &GetRoot() const;  //Get head of document (Json tree)
+        [[nodiscard]] const Node &GetRoot() const; //Get head of document (Json tree)
 
     private:
         Node root_;
     };
 
-    Document Load(std::istream &input);   // Load from stream as Json Document (Parsing Json)
+    Document Load(std::istream &input); // Load from stream as Json Document (Parsing Json)
 
-    void Print(const Document &doc, std::ostream &output);  // out in the stream using recursion
-
+    void Print(const Document &doc, std::ostream &output); // out in the stream using recursion
 }

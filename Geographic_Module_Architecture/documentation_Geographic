@@ -1,3 +1,0 @@
-struct Coordinates - имитирует структуру, которая хранит значения долготы и широты
-
-inline double ComputeDistance(Coordinates from, Coordinates to) - рассчитывает расстояние между двумя точки в пространстве по ее координатам

@@ -1,10 +1,10 @@
 #define _USE_MATH_DEFINES
 
-#include "svg.h"
+#include "../Mapping_src/svg.h"
 #include <cmath>
 #include "SVGtests.hpp"
 
-#include "cmake-build-debug/_deps/googletest-src/googletest/include/gtest/gtest.h"
+#include "gtest/gtest.h"
 
 //Just tests
 

@@ -2,10 +2,10 @@
 
 #include <sstream>
 #include <iostream>
-#include "transport_catalogue.h"
+#include "../Mapping_src/transport_catalogue.h"
 #include "json.h"
-#include "map_renderer.h"
-#include "request_handler.h"
+#include "../Mapping_src/map_renderer.h"
+#include "../Mapping_src/request_handler.h"
 
 namespace HandlingGettingRequests {
     class FillingCatalogue {

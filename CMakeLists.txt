@@ -14,14 +14,15 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(TransportCatalogue
-        json.cpp main.cpp
-        svg.cpp
-        transport_catalogue.cpp domain.cpp
-        json_reader.cpp map_renderer.cpp
-        request_handler.cpp
-        JsonTests.cpp
-        SVGtests.cpp)
+        Json_parser_src/json.cpp
+        main.cpp
+        Mapping_src/svg.cpp
+        Mapping_src/transport_catalogue.cpp Geography_src/domain.cpp
+        Json_parser_src/json_reader.cpp Mapping_src/map_renderer.cpp
+        Mapping_src/request_handler.cpp
+        Autotests/JsonTests.cpp
+        Autotests/SVGtests.cpp
+        #Autotests/gtest_main.cpp
+)
 
 target_link_libraries(TransportCatalogue PRIVATE gtest gtest_main)
-
-

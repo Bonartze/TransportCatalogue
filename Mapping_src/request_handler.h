@@ -1,7 +1,7 @@
 #include "svg.h"
 #include "transport_catalogue.h"
-#include "domain.h"
-#include "json.h"
+#include "../Geography_src/domain.h"
+#include "../Json_parser_src/json.h"
 #include <map>
 #include <vector>
 

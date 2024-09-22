@@ -1,18 +1,12 @@
-#include "json_reader.h"
-#include "transport_catalogue.h"
-#include "SVGtests.hpp"
-#include "JsonTests.hpp"
+#include "Json_parser_src/json_reader.h"
+#include "Mapping_src/transport_catalogue.h"
 
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-    /*JsonTest::RunAllJsonTests();
-    SVGtest::RunAllTests();
+int main() {
     RouteImitation::TransportCatalogue tc;
     HandlingGettingRequests::FillingCatalogue fc(tc);
-    fc.FillFileData("test.txt");
+    fc.FillFileData("test.json");
     fc.GetParsedJsonData();
     fc.FillingData();
-    fc.DisplayResultRequest("result.svg");*/
+    fc.DisplayResultRequest("result.svg");
     return 0;
 }

@@ -1,7 +1,7 @@
 
-#include "geo.h"
+#include "../Geography_src/geo.h"
 #include "svg.h"
-#include "domain.h"
+#include "../Geography_src/domain.h"
 #include <algorithm>
 #include <unordered_map>
 
