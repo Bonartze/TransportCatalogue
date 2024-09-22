@@ -28,7 +28,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run gtest
-        run: sudo chmod +x ./run_test && ./run_tests
+        run: sudo chmod +x ./run_tests && ./run_tests
 
   check_linters:
     runs-on: ubuntu-latest
