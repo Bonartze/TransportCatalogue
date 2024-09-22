@@ -15,12 +15,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Creating directory for building
-        run: mkdir build && cd build
       - name: Installing dependencies
         run: sudo apt-get install g++ make cmake -y
-      - name: Processing building
-        run: cmake .. && make -j`nproc`
+      - name: Creating directory for building
+        run: mkdir build && cd build && cmake .. && make -j`nproc`
+
 
   test:
     runs-on: ubuntu-latest
