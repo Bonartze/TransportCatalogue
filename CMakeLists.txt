@@ -13,7 +13,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(googletest)
 
-add_executable(TransportCatalogue
+add_executable(transport_catalogue
         Json_parser_src/json.cpp
         main.cpp
         Mapping_src/svg.cpp
@@ -36,4 +36,7 @@ add_executable(run_tests
 )
 
 
-target_link_libraries(run_test PRIVATE gtest gtest_main)
+target_link_libraries(transport_catalogue PRIVATE GTest::gtest_main)
+
+target_link_libraries(run_tests PRIVATE GTest::gtest_main)
+
