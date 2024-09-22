@@ -21,7 +21,7 @@ jobs:
         run: sudo apt-get install g++ make cmake -y
 
       - name: Creating directory for building
-        run: mkdir build && cd build && cmake .. && make -j`nproc`
+        run: mkdir build && cd build && cmake .. && make -j`nproc` && cd ../
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
