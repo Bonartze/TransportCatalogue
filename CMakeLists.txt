@@ -22,7 +22,18 @@ add_executable(TransportCatalogue
         Mapping_src/request_handler.cpp
         Autotests/JsonTests.cpp
         Autotests/SVGtests.cpp
-        #Autotests/gtest_main.cpp
 )
 
-target_link_libraries(TransportCatalogue PRIVATE gtest gtest_main)
+add_executable(run_tests
+        Json_parser_src/json.cpp
+        Mapping_src/svg.cpp
+        Mapping_src/transport_catalogue.cpp Geography_src/domain.cpp
+        Json_parser_src/json_reader.cpp Mapping_src/map_renderer.cpp
+        Mapping_src/request_handler.cpp
+        Autotests/JsonTests.cpp
+        Autotests/SVGtests.cpp
+        Autotests/gtest_main.cpp
+)
+
+
+target_link_libraries(run_test PRIVATE gtest gtest_main)

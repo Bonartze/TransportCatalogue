@@ -1,16 +1,42 @@
 name: GitHub Actions Demo
-run-name: ""
+run-name: "CI/CD pipeline"
 on:
-  branch_protection_rule:
-    types: [ created, deleted ]
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  Explore-GitHub-Actions:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Creating directory for building
+        run: mkdir build && cd build
+      - name: Installing dependencies
+        run: sudo apt-get install g++ make cmake -y
+      - name: Processing building
+        run: cmake ../ && make -j`nproc`
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run gtest
+        run: sudo chmod +x ./run_test && ./run_tests
+
+  check_linters:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install cppcheck
+        run: sudo apt-get install cppcheck -y
+      - name: Run cppcheck on the source code
+        run: cppcheck --enable=all --inconclusive --error-exitcode=1 ../
