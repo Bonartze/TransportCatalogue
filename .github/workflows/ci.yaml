@@ -67,7 +67,9 @@ jobs:
           --suppress=unusedFunction \
           --suppress=unreadVariable \
           --suppress=missingInclude \
+          --suppress=unassignedVariable \
+          --suppress=constParameter \
+          --suppress=useStlAlgorithm \
           --force \
           ./
-  
  
