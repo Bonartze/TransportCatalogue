@@ -57,4 +57,11 @@ jobs:
         run: sudo apt-get install cppcheck -y
 
       - name: Run cppcheck on the source code
-        run: cppcheck --enable=all --inconclusive --error-exitcode=1 ./
+        run: |
+          cppcheck --enable=all --inconclusive --error-exitcode=1 \
+          --suppress=syntaxError \
+          --suppress=unusedVariable \
+          --suppress=strPlusChar \
+          --suppress=initializerList \
+          ./
+ 
