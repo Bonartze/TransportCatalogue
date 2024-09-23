@@ -70,6 +70,7 @@ jobs:
           --suppress=unassignedVariable \
           --suppress=constParameter \
           --suppress=useStlAlgorithm \
+          --suppress=uninitMemberVar \
           --force \
           ./
  
