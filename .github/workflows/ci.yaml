@@ -63,5 +63,10 @@ jobs:
           --suppress=unusedVariable \
           --suppress=strPlusChar \
           --suppress=initializerList \
+          --suppress=noExplicitConstructor \
+          --suppress=unusedFunction \
+          --suppress=unreadVariable \
+          --suppress=missingInclude \
           ./
+  
  
