@@ -67,6 +67,7 @@ jobs:
           --suppress=unusedFunction \
           --suppress=unreadVariable \
           --suppress=missingInclude \
+          --force \
           ./
   
  
