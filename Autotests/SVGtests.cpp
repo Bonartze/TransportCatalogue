@@ -87,7 +87,7 @@ namespace SVGtest {
         Document doc;
         doc.Add(std::move(c));
         doc.Render(ss);
-        assert(ss.str() == "none\n"
+        ASSERT_TRUE(ss.str() == "none\n"
             "purple\n"
             "rgb(100,200,255)\n"
             "rgba(100,200,255,0.5)\n"
