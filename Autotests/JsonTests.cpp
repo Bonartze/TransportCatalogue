@@ -29,7 +29,6 @@ namespace JsonTest {
     }
 
     TEST(JSON_TEST, TEST_NULL) {
-        std::cerr << "Test NULL OK\n";
         Node null_node;
         ASSERT_TRUE(null_node.IsNull());
         ASSERT_TRUE(!null_node.IsInt());
@@ -53,7 +52,6 @@ namespace JsonTest {
 
 
     TEST(JSON_TEST, TEST_NUMBERS) {
-        std::cerr << "Test Numbers OK\n";
         const Node int_node{42};
         ASSERT_TRUE(int_node.IsInt());
         ASSERT_TRUE(int_node.AsInt() == 42);
@@ -87,7 +85,6 @@ namespace JsonTest {
     }
 
     TEST(JSON_TEST, TEST_STRINGS) {
-        std::cerr << "Test Strings OK\n";
         Node str_node{"Hello, \"everybody\""s};
         ASSERT_TRUE(str_node.IsString());
         ASSERT_TRUE(str_node.AsString() == "Hello, \"everybody\""s);
@@ -97,7 +94,6 @@ namespace JsonTest {
     }
 
     TEST(JSON_TEST, TEST_BOOL) {
-        std::cerr << "Test Bool OK\n";
         Node true_node{true};
         ASSERT_TRUE(true_node.IsBool());
         ASSERT_TRUE(true_node.AsBool());
@@ -116,7 +112,6 @@ namespace JsonTest {
     }
 
     TEST(JSON_TEST, TEST_ARRAY) {
-        std::cerr << "Test Array OK\n";
         Node arr_node{Array{1, 1.23, "Hello"s}};
         ASSERT_TRUE(arr_node.IsArray());
         const Array &arr = arr_node.AsArray();
@@ -132,7 +127,6 @@ namespace JsonTest {
     }
 
     TEST(JSON_TEST, TEST_MAP) {
-        std::cerr << "Test Map OK\n";
         Node dict_node{
             Dict{
                 {"key1"s, "value1"s},
@@ -156,7 +150,6 @@ namespace JsonTest {
 
     TEST(JSON_TEST, TEST_ERROR_HANDLING) {
         Node dbl_node{3.5}, array_node{Array{}};
-        std::cerr << "Test Error Handling OK\n";
         EXPECT_THROW(LoadJSON("["s), json::ParsingError) << "Wrong exception";
         EXPECT_THROW(LoadJSON("["s), json::ParsingError) << "Wrong exception";
 

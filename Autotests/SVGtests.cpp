@@ -6,7 +6,7 @@
 
 #include "gtest/gtest.h"
 
-//Just tests
+//@brief Just tests
 
 namespace SVGtest {
     svg::Polyline CreateStar(svg::Point center, double outer_rad, double inner_rad, int num_rays) {
@@ -62,7 +62,6 @@ namespace SVGtest {
     }
 
     TEST(SVG_TEST, ALL_RUN) {
-        std::cerr << "SVG tests OK\n";
         std::stringstream ss;
         using namespace svg;
         using namespace std;

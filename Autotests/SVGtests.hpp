@@ -6,7 +6,7 @@
 #include <gtest/gtest.h>
 
 
-//Just tests
+//@brief Just tests
 
 namespace SVGtest {
     svg::Polyline CreateStar(svg::Point center, double outer_rad, double inner_rad, int num_rays);

@@ -12,7 +12,7 @@
 using namespace std::literals;
 using namespace json;
 
-//Just test
+//@brief Just test
 
 namespace JsonTest {
     inline json::Document LoadJSON(const std::string &s) {
