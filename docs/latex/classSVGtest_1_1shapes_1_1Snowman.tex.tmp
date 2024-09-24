@@ -1,0 +1,37 @@
+\hypertarget{classSVGtest_1_1shapes_1_1Snowman}{}\doxysection{SVGtest\+::shapes\+::Snowman Class Reference}
+\label{classSVGtest_1_1shapes_1_1Snowman}\index{SVGtest::shapes::Snowman@{SVGtest::shapes::Snowman}}
+
+
+Inheritance diagram for SVGtest\+::shapes\+::Snowman\+:
+% FIG 0
+
+
+Collaboration diagram for SVGtest\+::shapes\+::Snowman\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classSVGtest_1_1shapes_1_1Snowman_a2e22ce408a7456e123cf6cd760c00e34}\label{classSVGtest_1_1shapes_1_1Snowman_a2e22ce408a7456e123cf6cd760c00e34}} 
+{\bfseries Snowman} (\mbox{\hyperlink{structsvg_1_1Point}{svg\+::\+Point}} c\+\_\+, int r)
+\item 
+void \mbox{\hyperlink{classSVGtest_1_1shapes_1_1Snowman_a169a1f5847401878388ba6d40381c060}{Draw}} (\mbox{\hyperlink{classsvg_1_1ObjectContainer}{svg\+::\+Object\+Container}} \&container) const override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classSVGtest_1_1shapes_1_1Snowman_a169a1f5847401878388ba6d40381c060}\label{classSVGtest_1_1shapes_1_1Snowman_a169a1f5847401878388ba6d40381c060}} 
+\index{SVGtest::shapes::Snowman@{SVGtest::shapes::Snowman}!Draw@{Draw}}
+\index{Draw@{Draw}!SVGtest::shapes::Snowman@{SVGtest::shapes::Snowman}}
+\doxysubsubsection{\texorpdfstring{Draw()}{Draw()}}
+{\footnotesize\ttfamily void SVGtest\+::shapes\+::\+Snowman\+::\+Draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsvg_1_1ObjectContainer}{svg\+::\+Object\+Container}} \&}]{container }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classsvg_1_1Drawable}{svg\+::\+Drawable}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Autotests/SVGtests.\+hpp\item 
+Autotests/SVGtests.\+cpp\end{DoxyCompactItemize}

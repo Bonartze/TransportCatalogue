@@ -1,0 +1,127 @@
+\hypertarget{json_8h_source}{}\doxysection{json.\+h}
+\label{json_8h_source}\index{Json\_parser\_src/json.h@{Json\_parser\_src/json.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <map>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <sstream>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <variant>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{comment}{//@brief Json parser}}
+\DoxyCodeLine{11 \textcolor{keyword}{namespace }json \{}
+\DoxyCodeLine{12     \textcolor{keyword}{class }Node;}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14     \textcolor{keyword}{using }Number = std::variant<int, double>;}
+\DoxyCodeLine{15     \textcolor{keyword}{using }Dict = std::map<std::string, Node>;}
+\DoxyCodeLine{16     \textcolor{keyword}{using }Array = std::vector<Node>;}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     \textcolor{keyword}{class }\mbox{\hyperlink{classjson_1_1ParsingError}{ParsingError}} : \textcolor{keyword}{public} std::runtime\_error \{}
+\DoxyCodeLine{19     \textcolor{keyword}{public}:}
+\DoxyCodeLine{20         \textcolor{keyword}{using }runtime\_error::runtime\_error;}
+\DoxyCodeLine{21     \};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keyword}{class }\mbox{\hyperlink{classjson_1_1Node}{Node}} \{}
+\DoxyCodeLine{24         \textcolor{keyword}{using }Value = std::variant<std::nullptr\_t, Array, Dict, bool, int, double, std::string>;}
+\DoxyCodeLine{25         \textcolor{comment}{//@brief Node of recursive Json tree}}
+\DoxyCodeLine{26     \textcolor{keyword}{public}:}
+\DoxyCodeLine{27         \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \mbox{\hyperlink{classjson_1_1Node}{Node}} \&another\_node) \textcolor{keyword}{const};}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29         \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} \mbox{\hyperlink{classjson_1_1Node}{Node}} \&another\_node) \textcolor{keyword}{const};}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31         \mbox{\hyperlink{classjson_1_1Node}{Node}}(); \textcolor{comment}{//@brief constructors not explicit to use expression like Node d \{AnyValue\} to reduce code}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33         \mbox{\hyperlink{classjson_1_1Node}{Node}}(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35         \mbox{\hyperlink{classjson_1_1Node}{Node}}(Value);}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37         \mbox{\hyperlink{classjson_1_1Node}{Node}}(Number);}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39         \mbox{\hyperlink{classjson_1_1Node}{Node}}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41         \mbox{\hyperlink{classjson_1_1Node}{Node}}(\textcolor{keywordtype}{double});}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43         \mbox{\hyperlink{classjson_1_1Node}{Node}}(Array);}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45         \mbox{\hyperlink{classjson_1_1Node}{Node}}(std::string);}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47         \mbox{\hyperlink{classjson_1_1Node}{Node}}(Dict);}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49         \mbox{\hyperlink{classjson_1_1Node}{Node}}(nullptr\_t);}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52         [[nodiscard]] \textcolor{keyword}{const} Array \&AsArray() \textcolor{keyword}{const};}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54         [[nodiscard]] \textcolor{keyword}{const} Dict \&AsMap() \textcolor{keyword}{const};}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56         [[nodiscard]] \textcolor{keywordtype}{int} AsInt() \textcolor{keyword}{const};}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58         [[nodiscard]] \textcolor{keyword}{const} std::string \&AsString() \textcolor{keyword}{const};}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60         [[nodiscard]] \textcolor{keywordtype}{double} AsDouble() \textcolor{keyword}{const};}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62         [[nodiscard]] \textcolor{keywordtype}{bool} AsBool() \textcolor{keyword}{const};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64         [[nodiscard]] \textcolor{keyword}{const} Value \&GetValue()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{65             \textcolor{keywordflow}{return} value\_;}
+\DoxyCodeLine{66         \}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68         [[nodiscard]] \textcolor{keywordtype}{bool} IsInt()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{69             \textcolor{keywordflow}{return} std::holds\_alternative<int>(value\_);}
+\DoxyCodeLine{70         \}}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72         [[nodiscard]] \textcolor{keywordtype}{bool} IsDouble()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{73             \textcolor{keywordflow}{return} std::holds\_alternative<double>(value\_) || IsInt();}
+\DoxyCodeLine{74         \}}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76         [[nodiscard]] \textcolor{keywordtype}{bool} IsPureDouble()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{77             \textcolor{keywordflow}{return} std::holds\_alternative<double>(value\_);}
+\DoxyCodeLine{78         \}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80         [[nodiscard]] \textcolor{keywordtype}{bool} IsBool()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{81             \textcolor{keywordflow}{return} std::holds\_alternative<bool>(value\_);}
+\DoxyCodeLine{82         \}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84         [[nodiscard]] \textcolor{keywordtype}{bool} IsMap()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{85             \textcolor{keywordflow}{return} std::holds\_alternative<Dict>(value\_);}
+\DoxyCodeLine{86         \}}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88         [[nodiscard]] \textcolor{keywordtype}{bool} IsString()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{89             \textcolor{keywordflow}{return} std::holds\_alternative<std::string>(value\_);}
+\DoxyCodeLine{90         \}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92         [[nodiscard]] \textcolor{keywordtype}{bool} IsNull()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{93             \textcolor{keywordflow}{return} std::holds\_alternative<nullptr\_t>(value\_);}
+\DoxyCodeLine{94         \}}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96         [[nodiscard]] \textcolor{keywordtype}{bool} IsArray()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{97             \textcolor{keywordflow}{return} std::holds\_alternative<Array>(value\_);}
+\DoxyCodeLine{98         \}}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100         [[nodiscard]] \textcolor{keywordtype}{bool} IsDict()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{101             \textcolor{keywordflow}{return} std::holds\_alternative<Dict>(value\_);}
+\DoxyCodeLine{102         \}}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     \textcolor{keyword}{private}:}
+\DoxyCodeLine{105         Value value\_;}
+\DoxyCodeLine{106     \};}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108     \textcolor{keyword}{class }\mbox{\hyperlink{classjson_1_1Document}{Document}} \{}
+\DoxyCodeLine{109     \textcolor{keyword}{public}:}
+\DoxyCodeLine{110         \textcolor{keyword}{explicit} \mbox{\hyperlink{classjson_1_1Document}{Document}}(\mbox{\hyperlink{classjson_1_1Node}{Node}} root);}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112         [[nodiscard]] \textcolor{keyword}{const} \mbox{\hyperlink{classjson_1_1Node}{Node}} \&GetRoot() \textcolor{keyword}{const}; \textcolor{comment}{//@brief Get head of document (Json tree)}}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114     \textcolor{keyword}{private}:}
+\DoxyCodeLine{115         \mbox{\hyperlink{classjson_1_1Node}{Node}} root\_;}
+\DoxyCodeLine{116     \};}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118     \mbox{\hyperlink{classjson_1_1Document}{Document}} Load(std::istream \&input); \textcolor{comment}{//@brief Load from stream as Json Document (Parsing Json)}}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     \textcolor{keywordtype}{void} Print(\textcolor{keyword}{const} \mbox{\hyperlink{classjson_1_1Document}{Document}} \&doc, std::ostream \&output); \textcolor{comment}{//@brief out in the stream using recursion}}
+\DoxyCodeLine{121 \}}
+
+\end{DoxyCode}

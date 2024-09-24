@@ -1,0 +1,35 @@
+\hypertarget{geo_8h_source}{}\doxysection{geo.\+h}
+\label{geo_8h_source}\index{Geography\_src/geo.h@{Geography\_src/geo.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{namespace }Geographic \{}
+\DoxyCodeLine{6     \textcolor{keyword}{struct }\mbox{\hyperlink{structGeographic_1_1Coordinates}{Coordinates}} \{}
+\DoxyCodeLine{7         \textcolor{keywordtype}{double} lat;}
+\DoxyCodeLine{8         \textcolor{keywordtype}{double} lng;}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10         \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \mbox{\hyperlink{structGeographic_1_1Coordinates}{Coordinates}} \&other)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{11             \textcolor{keywordflow}{return} lat == other.lat \&\& lng == other.lng;}
+\DoxyCodeLine{12         \}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14         \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} \mbox{\hyperlink{structGeographic_1_1Coordinates}{Coordinates}} \&other)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{15             \textcolor{keywordflow}{return} !(*\textcolor{keyword}{this} == other);}
+\DoxyCodeLine{16         \}}
+\DoxyCodeLine{17     \};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keyword}{inline} \textcolor{keywordtype}{double} ComputeDistance(\mbox{\hyperlink{structGeographic_1_1Coordinates}{Coordinates}} from, \mbox{\hyperlink{structGeographic_1_1Coordinates}{Coordinates}} to) \{}
+\DoxyCodeLine{20         \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{21         \textcolor{keywordflow}{if} (from == to) \{}
+\DoxyCodeLine{22             \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{23         \}}
+\DoxyCodeLine{24         \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{double} dr = 3.1415926535 / 180.;}
+\DoxyCodeLine{25         \textcolor{keywordflow}{return} acos(sin(from.lat * dr) * sin(to.lat * dr)}
+\DoxyCodeLine{26                     + cos(from.lat * dr) * cos(to.lat * dr) * cos(abs(from.lng -\/ to.lng) * dr))}
+\DoxyCodeLine{27                * 6371000;}
+\DoxyCodeLine{28     \}}
+\DoxyCodeLine{29 \}}
+
+\end{DoxyCode}

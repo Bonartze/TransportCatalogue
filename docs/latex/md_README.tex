@@ -1,0 +1,21 @@
+{\bfseries{Transport\+Catalogue}} — это система для управления и обработки транспортных данных, включающая в себя парсинг данных в формате JSON, обработку географической информации и визуализацию маршрутов на карте с помощью SVG.\hypertarget{md_README_autotoc_md1}{}\doxysection{Основные возможности}\label{md_README_autotoc_md1}
+
+\begin{DoxyItemize}
+\item {\bfseries{Парсинг данных}} из JSON-\/файлов.
+\item {\bfseries{Обработка географических данных}}, включая работу с транспортными остановками и маршрутами.
+\item {\bfseries{Отображение маршрутов}} на карте с использованием SVG.
+\item {\bfseries{Автоматическое тестирование}} функциональности с помощью Google Test.
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md2}{}\doxysection{Структура проекта}\label{md_README_autotoc_md2}
+
+\begin{DoxyItemize}
+\item {\ttfamily Autotests/} — директория с автоматическими тестами, написанными с использованием Google Test. Тесты проверяют основные модули проекта.
+\item {\ttfamily Geography\+\_\+src/} — исходный код для работы с географическими данными. Включает модули для управления остановками и маршрутами.
+\item {\ttfamily Json\+\_\+parser\+\_\+src/} — исходный код для парсинга данных в формате JSON. Модули загружают и анализируют данные для работы с маршрутами.
+\item {\ttfamily Mapping\+\_\+src/} — исходный код для отображения транспортных маршрутов в формате SVG.
+\item {\ttfamily main.\+cpp} — главный файл программы, в котором объединены все модули проекта.
+\item {\ttfamily test.\+json} — пример JSON-\/файла для парсинга и тестирования функциональности проекта.
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md3}{}\doxysection{Пример работы с входным файлом test.\+json (результат в result.\+svg)}\label{md_README_autotoc_md3}
+\hypertarget{md_README_autotoc_md4}{}\doxysection{Запуск на Linux}\label{md_README_autotoc_md4}
+Для сборки и запуска проекта на Linux выполните следующие команды\+:
+
+\`{}\`{}\`{}bash sudo apt-\/get install cmake g++ \&\& mkdir build \&\& cd build \textbackslash{} cmake ../ \&\& make -\/j{\ttfamily nproc} \&\& cd ../ \&\& chmod +x ./build/transport\+\_\+catalogue \&\& ./build/transport\+\_\+catalogue 

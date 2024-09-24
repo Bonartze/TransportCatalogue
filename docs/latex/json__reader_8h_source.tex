@@ -1,0 +1,39 @@
+\hypertarget{json__reader_8h_source}{}\doxysection{json\+\_\+reader.\+h}
+\label{json__reader_8h_source}\index{Json\_parser\_src/json\_reader.h@{Json\_parser\_src/json\_reader.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <sstream>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}../Mapping\_src/transport\_catalogue.h"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}json.h"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}../Mapping\_src/map\_renderer.h"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}../Mapping\_src/request\_handler.h"{}}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{namespace }HandlingGettingRequests \{}
+\DoxyCodeLine{11     \textcolor{keyword}{class }\mbox{\hyperlink{classHandlingGettingRequests_1_1FillingCatalogue}{FillingCatalogue}} \{}
+\DoxyCodeLine{12     \textcolor{keyword}{public}:}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14         \textcolor{keyword}{explicit} \mbox{\hyperlink{classHandlingGettingRequests_1_1FillingCatalogue}{FillingCatalogue}}(\mbox{\hyperlink{classRouteImitation_1_1TransportCatalogue}{RouteImitation::TransportCatalogue}} \&);}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16         \textcolor{keywordtype}{void} FillFileData(\textcolor{keyword}{const} std::string \&);  \textcolor{comment}{//@brief Filling stream by data of the input file}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18         \textcolor{keywordtype}{void} GetParsedJsonData();   \textcolor{comment}{//@brief Parsing data using Json library}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20         \textcolor{keywordtype}{void} FillingData();   \textcolor{comment}{//@brief Using Json library fill data in transport catalogue}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22         \textcolor{keywordtype}{void} DisplayResultRequest(\textcolor{keyword}{const} std::string \&); \textcolor{comment}{//@brief Just drawing routes in a stream(In this project in file)}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24     \textcolor{keyword}{private}:}
+\DoxyCodeLine{25         \mbox{\hyperlink{classrenderer_1_1DrawRoute}{renderer::DrawRoute}} drawing;}
+\DoxyCodeLine{26         std::stringstream input\_json\_data;}
+\DoxyCodeLine{27         \mbox{\hyperlink{classRouteImitation_1_1TransportCatalogue}{RouteImitation::TransportCatalogue}} \&db\_;}
+\DoxyCodeLine{28         \mbox{\hyperlink{classrequest_1_1RequestHandler}{request::RequestHandler}} rh;}
+\DoxyCodeLine{29         \mbox{\hyperlink{classjson_1_1Document}{json::Document}} parsed\_data;}
+\DoxyCodeLine{30         std::stringstream output\_json\_data;}
+\DoxyCodeLine{31         std::vector<json::Node> json\_out\_data;}
+\DoxyCodeLine{32     \};}
+\DoxyCodeLine{33 \}}
+
+\end{DoxyCode}

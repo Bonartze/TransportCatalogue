@@ -1,0 +1,43 @@
+\hypertarget{request__handler_8h_source}{}\doxysection{request\+\_\+handler.\+h}
+\label{request__handler_8h_source}\index{Mapping\_src/request\_handler.h@{Mapping\_src/request\_handler.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#include "{}svg.h"{}}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}transport\_catalogue.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}../Geography\_src/domain.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}../Json\_parser\_src/json.h"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <map>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{namespace }request \{}
+\DoxyCodeLine{11     \textcolor{keyword}{using }BusStat = std::unordered\_map<size\_t, RouteImitation::Bus *>;}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13     \textcolor{keyword}{class }\mbox{\hyperlink{classrequest_1_1RequestHandler}{RequestHandler}} \{}
+\DoxyCodeLine{14     \textcolor{keyword}{public}:}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16         \mbox{\hyperlink{classrequest_1_1RequestHandler}{RequestHandler}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18         \textcolor{keyword}{explicit} \mbox{\hyperlink{classrequest_1_1RequestHandler}{RequestHandler}}(\mbox{\hyperlink{classRouteImitation_1_1TransportCatalogue}{RouteImitation::TransportCatalogue}} \&);}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20         \textcolor{keywordtype}{void} AddBusStat(\textcolor{keyword}{const} std::string \&,                                          \textcolor{comment}{//@brief Pattern Facade added}}
+\DoxyCodeLine{21                         std::variant<std::vector<json::Node>,}
+\DoxyCodeLine{22                                 std::string> \&, \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24         \textcolor{keywordtype}{void} AddStopState(\textcolor{keyword}{const} std::string \&, \mbox{\hyperlink{structGeographic_1_1Coordinates}{Geographic::Coordinates}},}
+\DoxyCodeLine{25                           \textcolor{keyword}{const} std::map<std::string, json::Node> \&);}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28         \textcolor{keywordtype}{void} GetStopsByBus(\textcolor{keyword}{const} std::string \&, \textcolor{keywordtype}{int}, std::stringstream\&, std::vector<json::Node>\&);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30         \textcolor{keywordtype}{void} GetBusesByStop(\textcolor{keyword}{const} std::string \&, \textcolor{keywordtype}{int}, std::stringstream \&, std::vector<json::Node>\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     \textcolor{keyword}{private}:}
+\DoxyCodeLine{35         \mbox{\hyperlink{classRouteImitation_1_1TransportCatalogue}{RouteImitation::TransportCatalogue}} \&db\_;}
+\DoxyCodeLine{36     \};}
+\DoxyCodeLine{37 \}}
+
+\end{DoxyCode}

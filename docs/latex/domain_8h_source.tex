@@ -1,0 +1,55 @@
+\hypertarget{domain_8h_source}{}\doxysection{domain.\+h}
+\label{domain_8h_source}\index{Geography\_src/domain.h@{Geography\_src/domain.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#include "{}geo.h"{}}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <unordered\_set>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <deque>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{namespace }RouteImitation \{}
+\DoxyCodeLine{9     \textcolor{comment}{//@brief All the structures related to ways of storing transport catalogue data}}
+\DoxyCodeLine{10     \textcolor{keyword}{struct }Stop;}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12     \textcolor{keyword}{class }\mbox{\hyperlink{classRouteImitation_1_1HashStop}{HashStop}} \{}
+\DoxyCodeLine{13     \textcolor{keyword}{public}:}
+\DoxyCodeLine{14         std::size\_t operator()(\textcolor{keyword}{const} \mbox{\hyperlink{structRouteImitation_1_1Stop}{Stop}} \&stop) \textcolor{keyword}{const};}
+\DoxyCodeLine{15     \};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keyword}{struct }\mbox{\hyperlink{structRouteImitation_1_1Stop}{Stop}} \{}
+\DoxyCodeLine{18         \mbox{\hyperlink{structGeographic_1_1Coordinates}{Geographic::Coordinates}} coordinates;}
+\DoxyCodeLine{19         std::string name;}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21         \textcolor{keyword}{explicit} \mbox{\hyperlink{structRouteImitation_1_1Stop}{Stop}}(\textcolor{keyword}{const} \mbox{\hyperlink{structGeographic_1_1Coordinates}{Geographic::Coordinates}} \&coord, \textcolor{keyword}{const} std::string \&nm) : coordinates(coord), name(nm) \{}
+\DoxyCodeLine{22         \}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24         \mbox{\hyperlink{structRouteImitation_1_1Stop}{Stop}}() : coordinates\{0.0, 0.0\} \{}
+\DoxyCodeLine{25         \} \textcolor{comment}{//@brief Initialize coordinates with default values}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27         \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \mbox{\hyperlink{structRouteImitation_1_1Stop}{Stop}} \&other) \textcolor{keyword}{const};}
+\DoxyCodeLine{28     \};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31     \textcolor{keyword}{struct }\mbox{\hyperlink{structRouteImitation_1_1Bus}{Bus}} \{}
+\DoxyCodeLine{32         std::size\_t stops\_number;}
+\DoxyCodeLine{33         std::unordered\_set<Stop, HashStop> unique\_stops; \textcolor{comment}{//@param unique stops}}
+\DoxyCodeLine{34         \textcolor{keywordtype}{double} route\_length\_direct; \textcolor{comment}{//@param direct route length}}
+\DoxyCodeLine{35         \textcolor{keywordtype}{size\_t} route\_length\_computed; \textcolor{comment}{//@param real route length}}
+\DoxyCodeLine{36         \textcolor{keywordtype}{double} curvature;}
+\DoxyCodeLine{37         std::deque<Stop *> routes\_; \textcolor{comment}{//@param imitation of route}}
+\DoxyCodeLine{38         \textcolor{keywordtype}{char} type;}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40         \mbox{\hyperlink{structRouteImitation_1_1Bus}{Bus}}() : stops\_number(0), unique\_stops(\{\}),}
+\DoxyCodeLine{41                 route\_length\_direct(0.0), routes\_(\{\}),}
+\DoxyCodeLine{42                 type(\textcolor{charliteral}{'u'}), route\_length\_computed(0.0), curvature(0.0) \{}
+\DoxyCodeLine{43         \}}
+\DoxyCodeLine{44     \};}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keyword}{struct }\mbox{\hyperlink{structRouteImitation_1_1PairHash}{PairHash}} \{}
+\DoxyCodeLine{47         std::size\_t operator()(\textcolor{keyword}{const} std::pair<Stop *, Stop *> \&p) \textcolor{keyword}{const};}
+\DoxyCodeLine{48     \};}
+\DoxyCodeLine{49 \}}
+
+\end{DoxyCode}

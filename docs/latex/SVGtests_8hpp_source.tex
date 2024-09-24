@@ -1,0 +1,72 @@
+\hypertarget{SVGtests_8hpp_source}{}\doxysection{SVGtests.\+hpp}
+\label{SVGtests_8hpp_source}\index{Autotests/SVGtests.hpp@{Autotests/SVGtests.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#define \_USE\_MATH\_DEFINES}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}../Mapping\_src/svg.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <cassert>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <gtest/gtest.h>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{comment}{//@brief Just tests}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{namespace }SVGtest \{}
+\DoxyCodeLine{12     \mbox{\hyperlink{classsvg_1_1Polyline}{svg::Polyline}} CreateStar(\mbox{\hyperlink{structsvg_1_1Point}{svg::Point}} center, \textcolor{keywordtype}{double} outer\_rad, \textcolor{keywordtype}{double} inner\_rad, \textcolor{keywordtype}{int} num\_rays);}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15     \textcolor{keyword}{namespace }shapes \{}
+\DoxyCodeLine{16         \textcolor{keyword}{class }\mbox{\hyperlink{classSVGtest_1_1shapes_1_1Triangle}{Triangle}} : \textcolor{keyword}{public} \mbox{\hyperlink{classsvg_1_1Drawable}{svg::Drawable}} \{}
+\DoxyCodeLine{17         \textcolor{keyword}{public}:}
+\DoxyCodeLine{18             \mbox{\hyperlink{classSVGtest_1_1shapes_1_1Triangle}{Triangle}}(\mbox{\hyperlink{structsvg_1_1Point}{svg::Point}} p1, \mbox{\hyperlink{structsvg_1_1Point}{svg::Point}} p2, \mbox{\hyperlink{structsvg_1_1Point}{svg::Point}} p3);}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20             \textcolor{keywordtype}{void} Draw(\mbox{\hyperlink{classsvg_1_1ObjectContainer}{svg::ObjectContainer}} \&container) \textcolor{keyword}{const override};}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22         \textcolor{keyword}{private}:}
+\DoxyCodeLine{23             \mbox{\hyperlink{structsvg_1_1Point}{svg::Point}} p1\_, p2\_, p3\_;}
+\DoxyCodeLine{24         \};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26         \textcolor{keyword}{class }\mbox{\hyperlink{classSVGtest_1_1shapes_1_1Star}{Star}} : \textcolor{keyword}{public} \mbox{\hyperlink{classsvg_1_1Drawable}{svg::Drawable}} \{}
+\DoxyCodeLine{27         \textcolor{keyword}{public}:}
+\DoxyCodeLine{28             \mbox{\hyperlink{classSVGtest_1_1shapes_1_1Star}{Star}}(\mbox{\hyperlink{structsvg_1_1Point}{svg::Point}} p, \textcolor{keywordtype}{double} b\_l, \textcolor{keywordtype}{double} i\_r, \textcolor{keywordtype}{int} b\_n);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30             \textcolor{keywordtype}{void} Draw(\mbox{\hyperlink{classsvg_1_1ObjectContainer}{svg::ObjectContainer}} \&container) \textcolor{keyword}{const override};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \textcolor{keyword}{private}:}
+\DoxyCodeLine{33             \mbox{\hyperlink{structsvg_1_1Point}{svg::Point}} centre\_;}
+\DoxyCodeLine{34             \textcolor{keywordtype}{double} beam\_length;}
+\DoxyCodeLine{35             \textcolor{keywordtype}{double} inside\_radios;}
+\DoxyCodeLine{36             \textcolor{keywordtype}{int} beam\_number;}
+\DoxyCodeLine{37         \};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39         \textcolor{keyword}{class }\mbox{\hyperlink{classSVGtest_1_1shapes_1_1Snowman}{Snowman}} : \textcolor{keyword}{public} \mbox{\hyperlink{classsvg_1_1Drawable}{svg::Drawable}} \{}
+\DoxyCodeLine{40         \textcolor{keyword}{public}:}
+\DoxyCodeLine{41             \mbox{\hyperlink{classSVGtest_1_1shapes_1_1Snowman}{Snowman}}(\mbox{\hyperlink{structsvg_1_1Point}{svg::Point}} c\_, \textcolor{keywordtype}{int} r);}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43             \textcolor{keywordtype}{void} Draw(\mbox{\hyperlink{classsvg_1_1ObjectContainer}{svg::ObjectContainer}} \&container) \textcolor{keyword}{const override};}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45         \textcolor{keyword}{private}:}
+\DoxyCodeLine{46             \mbox{\hyperlink{structsvg_1_1Point}{svg::Point}} centre\_;}
+\DoxyCodeLine{47             \textcolor{keywordtype}{int} radios;}
+\DoxyCodeLine{48         \};}
+\DoxyCodeLine{49     \}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{keyword}{template}<\textcolor{keyword}{typename} DrawableIterator>}
+\DoxyCodeLine{53     \textcolor{keywordtype}{void} DrawPicture(DrawableIterator begin, DrawableIterator end, \mbox{\hyperlink{classsvg_1_1ObjectContainer}{svg::ObjectContainer}} \&target) \{}
+\DoxyCodeLine{54         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} it = begin; it != end; ++it) \{}
+\DoxyCodeLine{55             (*it)-\/>Draw(target);}
+\DoxyCodeLine{56         \}}
+\DoxyCodeLine{57     \}}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{keyword}{template}<\textcolor{keyword}{typename} Container>}
+\DoxyCodeLine{60     \textcolor{keywordtype}{void} DrawPicture(\textcolor{keyword}{const} Container \&container, \mbox{\hyperlink{classsvg_1_1ObjectContainer}{svg::ObjectContainer}} \&target) \{}
+\DoxyCodeLine{61         \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{62         DrawPicture(begin(container), end(container), target);}
+\DoxyCodeLine{63     \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keywordtype}{void} RunAllTests();}
+\DoxyCodeLine{66 \}}
+
+\end{DoxyCode}

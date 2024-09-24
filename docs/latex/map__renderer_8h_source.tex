@@ -1,0 +1,117 @@
+\hypertarget{map__renderer_8h_source}{}\doxysection{map\+\_\+renderer.\+h}
+\label{map__renderer_8h_source}\index{Mapping\_src/map\_renderer.h@{Mapping\_src/map\_renderer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}../Geography\_src/geo.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}svg.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}../Geography\_src/domain.h"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <algorithm>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{inline} \textcolor{keyword}{const} \textcolor{keywordtype}{double} EPSILON = 1e-\/6;}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{namespace }renderer \{}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14     \textcolor{keyword}{struct }\mbox{\hyperlink{structrenderer_1_1Parameters}{Parameters}} \{                 \textcolor{comment}{//@brief All the parameters for drawing}}
+\DoxyCodeLine{15         \textcolor{keywordtype}{int} width;}
+\DoxyCodeLine{16         \textcolor{keywordtype}{int} height;}
+\DoxyCodeLine{17         \textcolor{keywordtype}{int} padding;}
+\DoxyCodeLine{18         \textcolor{keywordtype}{int} stop\_radius;}
+\DoxyCodeLine{19         \textcolor{keywordtype}{int} line\_width;}
+\DoxyCodeLine{20         \textcolor{keywordtype}{int} bus\_label\_font\_size;}
+\DoxyCodeLine{21         std::vector<int> bus\_label\_offset;}
+\DoxyCodeLine{22         \textcolor{keywordtype}{int} stop\_label\_font\_size;}
+\DoxyCodeLine{23         std::vector<int> stop\_label\_offset;}
+\DoxyCodeLine{24         std::vector<double> underlayer\_color;}
+\DoxyCodeLine{25         \textcolor{keywordtype}{int} underlayer\_width;}
+\DoxyCodeLine{26     \};}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \textcolor{keywordtype}{bool} IsZero(\textcolor{keywordtype}{double});}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{keyword}{class }\mbox{\hyperlink{classrenderer_1_1SphereProjector}{SphereProjector}} \{   \textcolor{comment}{//@brief mapping points on the necessary map (set up by values padding, min\_lon\_ and max\_lat\_ in the class)}}
+\DoxyCodeLine{31     \textcolor{keyword}{public}:}
+\DoxyCodeLine{32         \textcolor{keyword}{template}<\textcolor{keyword}{typename} Po\textcolor{keywordtype}{int}InputIt>}
+\DoxyCodeLine{33         \mbox{\hyperlink{classrenderer_1_1SphereProjector}{SphereProjector}}(PointInputIt points\_begin, PointInputIt points\_end,}
+\DoxyCodeLine{34                         \textcolor{keywordtype}{double} max\_width, \textcolor{keywordtype}{double} max\_height, \textcolor{keywordtype}{double} padding)}
+\DoxyCodeLine{35                 : padding\_(padding) \{}
+\DoxyCodeLine{36             \textcolor{keywordflow}{if} (points\_begin == points\_end) \{}
+\DoxyCodeLine{37                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{38             \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40             \textcolor{keyword}{const} \textcolor{keyword}{auto} [left\_it, right\_it] = std::minmax\_element(}
+\DoxyCodeLine{41                     points\_begin, points\_end,}
+\DoxyCodeLine{42                     [](\textcolor{keyword}{auto} lhs, \textcolor{keyword}{auto} rhs) \{ \textcolor{keywordflow}{return} lhs.lng < rhs.lng; \});}
+\DoxyCodeLine{43             min\_lon\_ = left\_it-\/>lng;}
+\DoxyCodeLine{44             \textcolor{keyword}{const} \textcolor{keywordtype}{double} max\_lon = right\_it-\/>lng;}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46             \textcolor{keyword}{const} \textcolor{keyword}{auto} [bottom\_it, top\_it] = std::minmax\_element(}
+\DoxyCodeLine{47                     points\_begin, points\_end,}
+\DoxyCodeLine{48                     [](\textcolor{keyword}{auto} lhs, \textcolor{keyword}{auto} rhs) \{ \textcolor{keywordflow}{return} lhs.lat < rhs.lat; \});}
+\DoxyCodeLine{49             \textcolor{keyword}{const} \textcolor{keywordtype}{double} min\_lat = bottom\_it-\/>lat;}
+\DoxyCodeLine{50             max\_lat\_ = top\_it-\/>lat;}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52             std::optional<double> width\_zoom;}
+\DoxyCodeLine{53             \textcolor{keywordflow}{if} (!IsZero(max\_lon -\/ min\_lon\_)) \{}
+\DoxyCodeLine{54                 width\_zoom = (max\_width -\/ 2 * padding) / (max\_lon -\/ min\_lon\_);}
+\DoxyCodeLine{55             \}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57             std::optional<double> height\_zoom;}
+\DoxyCodeLine{58             \textcolor{keywordflow}{if} (!IsZero(max\_lat\_ -\/ min\_lat)) \{}
+\DoxyCodeLine{59                 height\_zoom = (max\_height -\/ 2 * padding) / (max\_lat\_ -\/ min\_lat);}
+\DoxyCodeLine{60             \}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62             \textcolor{keywordflow}{if} (width\_zoom \&\& height\_zoom) \{}
+\DoxyCodeLine{63                 zoom\_coeff\_ = std::min(*width\_zoom, *height\_zoom);}
+\DoxyCodeLine{64             \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (width\_zoom) \{}
+\DoxyCodeLine{65                 zoom\_coeff\_ = *width\_zoom;}
+\DoxyCodeLine{66             \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (height\_zoom) \{}
+\DoxyCodeLine{67                 zoom\_coeff\_ = *height\_zoom;}
+\DoxyCodeLine{68             \}}
+\DoxyCodeLine{69         \}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72         \textcolor{keyword}{inline} \mbox{\hyperlink{structsvg_1_1Point}{svg::Point}} operator()(\mbox{\hyperlink{structGeographic_1_1Coordinates}{Geographic::Coordinates}} coords)\textcolor{keyword}{ const }\{   \textcolor{comment}{//@brief method for scaling coordinates, return scaled points}}
+\DoxyCodeLine{73             \textcolor{keywordflow}{return} \{}
+\DoxyCodeLine{74                     (coords.lng -\/ min\_lon\_) * zoom\_coeff\_ + padding\_,}
+\DoxyCodeLine{75                     (max\_lat\_ -\/ coords.lat) * zoom\_coeff\_ + padding\_}
+\DoxyCodeLine{76             \};}
+\DoxyCodeLine{77         \}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \textcolor{keyword}{private}:}
+\DoxyCodeLine{80         \textcolor{keywordtype}{double} padding\_;}
+\DoxyCodeLine{81         \textcolor{keywordtype}{double} min\_lon\_ = 0;}
+\DoxyCodeLine{82         \textcolor{keywordtype}{double} max\_lat\_ = 0;}
+\DoxyCodeLine{83         \textcolor{keywordtype}{double} zoom\_coeff\_ = 0;}
+\DoxyCodeLine{84     \};}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87     \textcolor{keyword}{class }\mbox{\hyperlink{classrenderer_1_1DrawRoute}{DrawRoute}} \{        \textcolor{comment}{//@brief DrawRoute using SVG library}}
+\DoxyCodeLine{88     \textcolor{keyword}{private}:}
+\DoxyCodeLine{89         std::unordered\_map<std::string, RouteImitation::Bus *> \&routes;}
+\DoxyCodeLine{90         std::unordered\_map<std::string, RouteImitation::Stop> \&stops\_coordinates;}
+\DoxyCodeLine{91         std::vector<Geographic::Coordinates> AllCords;}
+\DoxyCodeLine{92         \mbox{\hyperlink{structrenderer_1_1Parameters}{Parameters}} params;}
+\DoxyCodeLine{93         \mbox{\hyperlink{classsvg_1_1Document}{svg::Document}} doc;  \textcolor{comment}{//@brief field for drawing (pushing here will draw the picture)}}
+\DoxyCodeLine{94     \textcolor{keyword}{public}:}
+\DoxyCodeLine{95         \textcolor{keyword}{inline} \mbox{\hyperlink{structrenderer_1_1Parameters}{Parameters}} \&GetParams() \{   \textcolor{comment}{//@brief getting parameters by reference}}
+\DoxyCodeLine{96             \textcolor{keywordflow}{return} params;}
+\DoxyCodeLine{97         \}}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99         \mbox{\hyperlink{classrenderer_1_1DrawRoute}{DrawRoute}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101         \mbox{\hyperlink{classrenderer_1_1DrawRoute}{DrawRoute}}(std::unordered\_map<std::string, RouteImitation::Stop> \&,}
+\DoxyCodeLine{102                   std::unordered\_map<std::string, RouteImitation::Bus *> \&route);}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104         \textcolor{keywordtype}{void} SetAll(std::unordered\_map<std::string, RouteImitation::Stop> \&,      \textcolor{comment}{//@brief Set private fields in the class}}
+\DoxyCodeLine{105                     std::unordered\_map<std::string, RouteImitation::Bus *> \&);}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107         \textcolor{keywordtype}{void} Draw(\textcolor{keyword}{const} std::string\& file\_name);  \textcolor{comment}{//@brief Draw method, take name of output file}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109     \};}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111 \}}
+
+\end{DoxyCode}

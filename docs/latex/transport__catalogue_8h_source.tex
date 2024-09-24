@@ -1,0 +1,51 @@
+\hypertarget{transport__catalogue_8h_source}{}\doxysection{transport\+\_\+catalogue.\+h}
+\label{transport__catalogue_8h_source}\index{Mapping\_src/transport\_catalogue.h@{Mapping\_src/transport\_catalogue.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <deque>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <string\_view>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <unordered\_set>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}../Geography\_src/domain.h"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{namespace }RouteImitation \{}
+\DoxyCodeLine{12     \textcolor{keyword}{class }\mbox{\hyperlink{classRouteImitation_1_1TransportCatalogue}{TransportCatalogue}} \{}
+\DoxyCodeLine{13     \textcolor{keyword}{public}:}
+\DoxyCodeLine{14         \textcolor{keywordtype}{void} AddStop(\textcolor{keyword}{const} std::string \&, \mbox{\hyperlink{structGeographic_1_1Coordinates}{Geographic::Coordinates}});}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16         \textcolor{comment}{//@brief Add stop as member of class's field in unordered\_map}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18         \textcolor{keywordtype}{void} AddStopDistances(\textcolor{keyword}{const} std::string \&, \textcolor{keyword}{const} std::string \&,}
+\DoxyCodeLine{19                               \textcolor{keywordtype}{size\_t}); \textcolor{comment}{//@brief Add pair of the stops and distance between, first parameter is stop from,}}
+\DoxyCodeLine{20         \textcolor{comment}{//@brief the second one is to, third is distance}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23         std::unordered\_set<std::string> \&GetBusesInStop(}
+\DoxyCodeLine{24             \textcolor{keyword}{const} std::string \&);}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26         \textcolor{comment}{//@brief return reference to unordered\_set with all buses that come across the bus (parameter)}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28         \textcolor{keywordtype}{void} AddTag(\textcolor{keyword}{const} std::string \&, \textcolor{keywordtype}{char} c); \textcolor{comment}{//@brief Add tag to route is if it is cycle or uncycle}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30         std::unordered\_map<std::string, Bus *> \&GetRoutes(); \textcolor{comment}{//@brief Return reference to all the routes by bus's name}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         std::unordered\_map<std::string, Stop> \&GetStops(); \textcolor{comment}{//@brief Return all the bus stops}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34         \textcolor{keywordtype}{void} AddBusRouteStop(\textcolor{keyword}{const} std::string \&,}
+\DoxyCodeLine{35                              \textcolor{keyword}{const} std::string \&);}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37         \textcolor{comment}{//@brief Push in the route of bus new bus stop and calculate all parameters instantly}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keyword}{private}:}
+\DoxyCodeLine{40         std::unordered\_map<std::string, Stop> stops; \textcolor{comment}{//@brief O(1) all operation average}}
+\DoxyCodeLine{41         std::unordered\_map<std::string, Bus *> routes;}
+\DoxyCodeLine{42         std::unordered\_map<Stop *, std::unordered\_set<std::string> > buses\_in\_stops; \textcolor{comment}{//@brief buses with all their stops}}
+\DoxyCodeLine{43         std::unordered\_map<std::pair<Stop *, Stop *>, size\_t, \mbox{\hyperlink{structRouteImitation_1_1PairHash}{PairHash}}> stop\_distances; \textcolor{comment}{//@brief distances between stops}}
+\DoxyCodeLine{44     \};}
+\DoxyCodeLine{45 \}}
+
+\end{DoxyCode}
