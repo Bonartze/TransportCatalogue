@@ -10,7 +10,7 @@
 using namespace std::literals;
 using namespace json;
 
-//Just tests
+//@brief Just tests
 
 namespace JsonTest {
     void MustFailToLoad(const std::string &s) {
@@ -151,31 +151,31 @@ namespace JsonTest {
                 "\t\r\n\n\r { \t\r\n\n\r \"key1\" \t\r\n\n\r: \t\r\n\n\r \"value1\" \t\r\n\n\r , \t\r\n\n\r \"key2\" \t\r\n\n\r : \t\r\n\n\r 42 \t\r\n\n\r } \t\r\n\n\r"s
             )
             .GetRoot()
-            == dict_node);
+            == dict_node) << "Json didn't load correct\n";
     }
 
     TEST(JSON_TEST, TEST_ERROR_HANDLING) {
         Node dbl_node{3.5}, array_node{Array{}};
         std::cerr << "Test Error Handling OK\n";
-        EXPECT_THROW(LoadJSON("["s), json::ParsingError);
-        EXPECT_THROW(LoadJSON("["s), json::ParsingError);
+        EXPECT_THROW(LoadJSON("["s), json::ParsingError) << "Wrong exception";
+        EXPECT_THROW(LoadJSON("["s), json::ParsingError) << "Wrong exception";
 
-        EXPECT_THROW(LoadJSON("{"s), json::ParsingError);
-        EXPECT_THROW(LoadJSON("}"s), json::ParsingError);
+        EXPECT_THROW(LoadJSON("{"s), json::ParsingError) << "Wrong exception";
+        EXPECT_THROW(LoadJSON("}"s), json::ParsingError) << "Wrong exception";
 
-        EXPECT_THROW(LoadJSON("\"hello"s), json::ParsingError);
+        EXPECT_THROW(LoadJSON("\"hello"s), json::ParsingError) << "Wrong exception";
 
-        EXPECT_THROW(LoadJSON("tru"s), json::ParsingError);
-        EXPECT_THROW(LoadJSON("fals"s), json::ParsingError);
-        EXPECT_THROW(LoadJSON("nul"s), json::ParsingError);
+        EXPECT_THROW(LoadJSON("tru"s), json::ParsingError) << "Wrong exception";
+        EXPECT_THROW(LoadJSON("fals"s), json::ParsingError) << "Wrong exception";
+        EXPECT_THROW(LoadJSON("nul"s), json::ParsingError) << "Wrong exception";
 
-        EXPECT_THROW(dbl_node.AsInt(), std::logic_error);
-        EXPECT_THROW(dbl_node.AsString(), std::logic_error);
-        EXPECT_THROW(dbl_node.AsArray(), std::logic_error);
+        EXPECT_THROW(dbl_node.AsInt(), std::logic_error) << "Wrong exception";
+        EXPECT_THROW(dbl_node.AsString(), std::logic_error) << "Wrong exception";
+        EXPECT_THROW(dbl_node.AsArray(), std::logic_error) << "Wrong exception";
 
-        EXPECT_THROW(array_node.AsMap(), std::logic_error);
-        EXPECT_THROW(array_node.AsDouble(), std::logic_error);
-        EXPECT_THROW(array_node.AsBool(), std::logic_error);
+        EXPECT_THROW(array_node.AsMap(), std::logic_error) << "Wrong exception";
+        EXPECT_THROW(array_node.AsDouble(), std::logic_error) << "Wrong exception";
+        EXPECT_THROW(array_node.AsBool(), std::logic_error) << "Wrong exception";
     }
 
     TEST(JSON_TEST, TEST_BENCHMARK) {
